@@ -1,0 +1,32 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.img{
+    display: none;
+}
+.img.active{
+    display: block;
+}
+.grid{
+    display:none;
+
+    width: 500px;
+    height: 300px;
+    border: 1px solid black;
+}
+.grid.active{
+    display: grid;
+}
+img{
+    transition: .3s ease-in-out;
+}
