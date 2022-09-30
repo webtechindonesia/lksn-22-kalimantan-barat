@@ -1,7 +1,7 @@
 <?php 
 $xml = '';
 $json = '';
-if($_POST['xml']){
+if(isset($_POST['xml'])){
     $xml = simplexml_load_string($_POST['xml']);
     $json = json_encode($xml,JSON_PRETTY_PRINT);
 }

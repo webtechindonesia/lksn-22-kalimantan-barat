@@ -1,3 +1,10 @@
+<?php 
+    $month = date('m');
+    $year = date('y');
+    if(isset($_GET['month']) && isset($_GET['year'])){
+
+    }
+?>
 <html>
 
 <head>
