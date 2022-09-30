@@ -1,30 +1,31 @@
 const field = document.querySelector('.grid')
 const x = document.querySelector('#x');
 const y = document.querySelector('#y');
-const image = document.querySelector('#img')
+const aImage = document.querySelector('#img')
 
 const splitBtn = document.querySelector('.split-btn')
 splitBtn.addEventListener('click', (e) => {
-    toggleActive(image)
+    toggleActive(aImage)
     toggleActive(field)
 
-    let width = 500;
-    let height = 300
     let newX = x.value,
-        newY = y.value
+        newY = y.value;
     let crop = {
-        w: image.width / newX,
-        h: image.height / newY
+        w: aImage.width / newX,
+        h: aImage.height / newY
     }
 
     let imageW = 500 / newX
     let imageH = 300 / newY
+
     for (let row = 0; row < newY; row++) {
         for (let col = 0; col < newX; col++) {
             const image = new Image()
             const canvas = document.createElement('canvas')
             const c = canvas.getContext('2d')
-            c.drawImage(image,
+            canvas.width = imageW
+            canvas.height = imageH
+            c.drawImage(aImage,
                 col * crop.w,
                 row * crop.h,
                 crop.w,
@@ -33,16 +34,20 @@ splitBtn.addEventListener('click', (e) => {
                 0,
                 imageW,
                 imageH)
-            image.addEventListener('load', (e)=>{
-                image.style.border = "1px solid yellow"
-                image.addEventListener('click',(e)=>{
-                    e.currentTarget.opacity = '0'
+
+            image.addEventListener('load', (e) => {
+                image.style.border = '1px solid yellow'
+                image.addEventListener('click', (e) => {
+                    image.style.opacity = '0'
                 })
                 field.appendChild(image)
             })
             image.src = canvas.toDataURL()
         }
     }
+
+    field.style.gridTemplateColumns = `repeat(${newX}, auto)`
+    field.style.gridTemplateRows = `repeat(${newY}, auto)`
 });
 
 const toggleActive = (dom) => {

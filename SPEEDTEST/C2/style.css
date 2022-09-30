@@ -27,6 +27,9 @@ body{
 .grid.active{
     display: grid;
 }
+.grid img{
+    width: 1fr;
+}
 img{
     transition: .3s ease-in-out;
 }
