@@ -5,6 +5,7 @@ import CreateForm from "@/views/create-form.vue";
 import DetailForm from "@/views/detail-form.vue";
 import Responses from "@/views/responses.vue";
 import SubmitForm from "@/views/submit-form.vue";
+import NotFoundPage from "@/views/404.vue";
 
 const routes = [
   {
@@ -48,13 +49,14 @@ const routes = [
     path: "/forms/:slug",
     name: "submitForm",
     component: SubmitForm,
-    meta:{
-      auth:true
-    }
+    meta: {
+      auth: true,
+    },
   },
   {
     path: "/:pathMatch(.*)*",
     name: "404",
+    component: NotFoundPage,
   },
 ];
 
