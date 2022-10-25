@@ -64,49 +64,67 @@
 
           <!--  -->
 
-          <div class="row justify-content-center" >
-            <div class="col-lg-5 col-md-6" >
-              <div class="question-item card card-default my-4" v-for="(question, i) in questions" :key="i">
-                <div class="card-body" >
-
-                  <div class="form-group my-3" v-if="question.choice_type == 'short answer'" >
+          <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-6">
+              <div
+                class="question-item card card-default my-4"
+                v-for="question in questions"
+                :key="question.id"
+              >
+                <div class="card-body">
+                  <div class="form-group my-3">
                     <input
                       type="text"
                       placeholder="Question"
                       class="form-control"
                       name="name"
-                      value="Name"
+                      :value="question.name"
                       disabled
                     />
                   </div>
 
-                  <div class="form-group my-3" >
-                    <select name="choice_type" class="form-select" disabled>
-                      <option>Choice Type</option>
-                      <option :selected="question.content_type == 'short answer'" value="short answer" >
-                        Short Answer
-                      </option>
-                      <option :selected="question.content_type == 'paragraph'" value="paragraph">Paragraph</option>
-                      <option :selected="question.content_type == 'multiple choice'" value="multiple choice">Multiple Choice</option>
-                      <option :selected="question.content_type == 'dropdown'" value="dropdown">Dropdown</option>
-                      <option :selected="question.content_type == 'checkboxes'" value="checkboxes">Checkboxes</option>
+                  <div class="form-group my-3">
+                    <select
+                      name="choice_type"
+                      style="text-transform: capitalize"
+                      class="form-select"
+                      disabled
+                    >
+                      <option>{{ question.choice_type }}</option>
                     </select>
                   </div>
-                  <div class="form-check form-switch" aria-colspan="my-3" >
+                  <div class="form-group my-3" v-if="question.choices">
+                    <textarea
+                      placeholder="Choices"
+                      class="form-control"
+                      name="choices"
+                      rows="4"
+                      disabled
+                      >{{ question.choices }}</textarea
+                    >
+                    <div class="form-text">
+                      Separate choices using comma ",".
+                    </div>
+                  </div>
+                  <div class="form-check form-switch" aria-colspan="my-3">
                     <input
                       class="form-check-input"
                       type="checkbox"
                       role="switch"
                       id="required"
+                      checked
                       disabled
-                      :checked="question.is_required"
                     />
                     <label class="form-check-label" for="required"
                       >Required</label
                     >
                   </div>
                   <div class="mt-3">
-                    <button type="submit" class="btn btn-outline-danger">
+                    <button
+                      @click="remove(question.id)"
+                      type="submit"
+                      class="btn btn-outline-danger"
+                    >
                       Remove
                     </button>
                   </div>
@@ -122,13 +140,17 @@
                         placeholder="Question"
                         class="form-control"
                         name="name"
-                        value=""
+                        v-model="data.name"
                       />
                     </div>
 
                     <div class="form-group my-3">
-                      <select name="choice_type" class="form-select">
-                        <option selected>Choice Type</option>
+                      <select
+                        name="choice_type"
+                        class="form-select"
+                        v-model="data.choice_type"
+                      >
+                        <option selected disabled>Choice Type</option>
                         <option value="short answer">Short Answer</option>
                         <option value="paragraph">Paragraph</option>
                         <option value="date">Date</option>
@@ -137,12 +159,32 @@
                         <option value="checkboxes">Checkboxes</option>
                       </select>
                     </div>
+                    <div
+                      class="form-group my-3"
+                      v-if="
+                        data.choice_type == 'multiple choice' ||
+                        data.choice_type == 'checkboxes' ||
+                        data.choice_type == 'dropdown'
+                      "
+                    >
+                      <textarea
+                        placeholder="Choices"
+                        class="form-control"
+                        name="choices"
+                        rows="4"
+                        v-model="data.choices"
+                      ></textarea>
+                      <div class="form-text">
+                        Separate choices using comma ",".
+                      </div>
+                    </div>
                     <div class="form-check form-switch" aria-colspan="my-3">
                       <input
                         class="form-check-input"
                         type="checkbox"
                         role="switch"
                         id="required"
+                        @click="toggle($event)"
                       />
                       <label class="form-check-label" for="required"
                         >Required</label
@@ -175,15 +217,22 @@ export default {
       slug: this.$route.query.slug,
       form: null,
       questions: null,
+      selectedChoice: null,
+      data: {
+        name: "",
+        choices: "",
+        choice_type: "Choice Type",
+        is_required: 0,
+      },
     };
   },
   methods: {
-    remove(e) {
+    remove(id) {
       axios
-        .delete(API_URL + `/${this.slug}/questions/${e}`)
+        .delete(API_URL + `/forms/${this.slug}/questions/${id}`)
         .then((res) => {
           axios
-            .get(API_URL + "/forms/" + slug)
+            .get(API_URL + "/forms/" + this.slug)
             .then((res) => {
               console.log(res.data.form);
               this.form = res.data.form;
@@ -192,27 +241,33 @@ export default {
             .catch((err) => {});
         })
         .catch((err) => {
-          alert(err.response.data.message);
+          console.log(err);
         });
     },
+    toggle(e) {
+      this.data.is_required = e.target.checked;
+    },
     submitForm(e) {
-      const form = new FormData(e.target);
-      const data = Object.fromEntries(form.entries());
-
+      if (this.data.choice_type == "Choice Type") {
+        alert("Please Choose the type");
+        return;
+      }
       axios
-        .post(API_URL + `/${this.slug}/questions`, data)
+        .post(API_URL + `/forms/${this.slug}/questions`, this.data)
         .then((res) => {
+          console.log(res);
           alert(res.data.message);
           axios
-            .get(API_URL + "/forms/" + slug)
+            .get(API_URL + "/forms/" + this.slug)
             .then((res) => {
-              console.log(res.data.form);
               this.form = res.data.form;
               this.questions = res.data.form.questions;
             })
             .catch((err) => {});
         })
-        .catch((err) => {});
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   created() {
