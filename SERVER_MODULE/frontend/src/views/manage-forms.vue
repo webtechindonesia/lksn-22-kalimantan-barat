@@ -31,7 +31,7 @@
           <h6 class="mb-3">List Form</h6>
 
           <router-link
-            :to="{ name: 'detailForm', params: { id: form.id } }"
+            :to="{ name: 'detailForm', query: { slug: form.slug } }"
             class="card card-default mb-3"
             v-for="(form, i) in forms"
             :key="i"

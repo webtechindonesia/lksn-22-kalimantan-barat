@@ -28,7 +28,7 @@ const routes = [
   {
     path: "/detail-form",
     name: "detailForm",
-    component: DetailForm,
+    component: DetailForm,    
   },
   {
     path: "/:pathMatch(.*)*",

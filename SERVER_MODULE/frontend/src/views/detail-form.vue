@@ -313,7 +313,7 @@ Football,Guitar,Coding,Watching,Traveling</textarea
 
               <div class="question-item card card-default my-4">
                 <div class="card-body">
-                  <form>
+                  <form @submit.prevent="submitForm($event)">
                     <div class="form-group my-3">
                       <input
                         type="text"
@@ -362,7 +362,36 @@ Football,Guitar,Coding,Watching,Traveling</textarea
   </body>
 </template>
 <script>
+import { API_URL } from "@/constant";
+import axios from "axios";
+
 export default {
-  name: "detailForm",
+  name: "detailForm",  
+  data(){
+   return{
+      slug: this.$route.params
+   }  
+  },
+  methods: {
+    submitForm(e) {
+      const form = new FormData(e.target);
+      const data = Object.fromEntries(form.entries());
+   
+      axios.post(API_URL + "");
+    },
+  },
+  created() {
+   console.log(this.$route.query)
+    axios.defaults.headers.common["Authorization"] =
+      "Bearer " + localStorage.token;
+   
+    axios
+      .get(API_URL + "/forms/" + this.slug)
+      .then((res) => {
+         
+      })
+      .catch((err) => {
+      });
+  },
 };
 </script>
