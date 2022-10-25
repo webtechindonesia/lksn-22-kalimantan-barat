@@ -56,7 +56,14 @@
                   <a class="nav-link active" href="#">Questions</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Responses</a>
+                  <router-link
+                    class="nav-link"
+                    :to="{
+                      name: 'responses',
+                      query: { slug: this.$route.query.slug },
+                    }"
+                    >Responses</router-link
+                  >
                 </li>
               </ul>
             </div>

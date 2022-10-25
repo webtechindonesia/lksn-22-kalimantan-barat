@@ -3,6 +3,7 @@ import Login from "@/views";
 import ManageForm from "@/views/manage-forms.vue";
 import CreateForm from "@/views/create-form.vue";
 import DetailForm from "@/views/detail-form.vue";
+import Responses from "@/views/responses.vue";
 const routes = [
   {
     path: "/",
@@ -28,7 +29,18 @@ const routes = [
   {
     path: "/detail-form",
     name: "detailForm",
-    component: DetailForm,    
+    component: DetailForm,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/detail-form/responses",
+    name: "responses",
+    component: Responses,
+    meta: {
+      auth: true,
+    },
   },
   {
     path: "/:pathMatch(.*)*",
