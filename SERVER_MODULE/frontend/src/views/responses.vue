@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <body v-if="form">
     <nav class="navbar navbar-expand-lg sticky-top bg-primary navbar-dark">
       <div class="container">
         <a class="navbar-brand" href="manage-forms.html">Formify</a>
@@ -23,14 +23,18 @@
     <main>
       <div class="hero py-5 bg-light">
         <div class="container text-center">
-          <h2 class="mb-2">Biodata - Web Tech Members</h2>
-          <div class="text-muted mb-4">To save web tech members biodata</div>
+          <h2 class="mb-2">{{ form.name }}</h2>
+          <div class="text-muted mb-4">{{ form.description }}</div>
           <div>
             <div>
               <small>For user domains</small>
             </div>
             <small
-              ><span class="text-primary">webtech.id, webtech.org</span></small
+              ><span class="text-primary"
+                ><span v-for="(a_domain, i) in form.allowed_domains" :key="i">{{
+                  a_domain.domain + ", "
+                }}</span></span
+              ></small
             >
           </div>
         </div>
@@ -52,10 +56,17 @@
 
               <ul class="nav nav-tabs mb-2 justify-content-center">
                 <li class="nav-item">
-                  <a class="nav-link" href="detail-form.html">Questions</a>
+                  <router-link
+                    class="nav-link"
+                    :to="{
+                      name: 'detailForm',
+                      query: { slug: this.$route.query.slug },
+                    }"
+                    >Questions</router-link
+                  >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" href="responses.html">Responses</a>
+                  <a class="nav-link active" href="#">Responses</a>
                 </li>
               </ul>
             </div>
@@ -65,42 +76,22 @@
             <div class="col-lg-10">
               <table class="table mt-3">
                 <caption>
-                  Total Responses: 3
+                  Total Responses:
+                  {{responses}}
                 </caption>
                 <thead>
                   <tr class="text-muted">
-                    <th>User</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Sex</th>
-                    <th>Born Date</th>
-                    <th>Hobbies</th>
+                    <th v-for="question in questions" :key="question.id">
+                      {{ question.name }}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="text-primary">budi@webtech.id</td>
-                    <td>Budi Andrianto</td>
-                    <td>Jakarta</td>
-                    <td>Male</td>
-                    <td>2000-09-09</td>
-                    <td>Football, Coding, Guitar.</td>
-                  </tr>
-                  <tr>
-                    <td class="text-primary">andi@webtech.id</td>
-                    <td>Andi Budiman</td>
-                    <td>Surabaya</td>
-                    <td>Male</td>
-                    <td>2005-10-01</td>
-                    <td>Traveling, Watching.</td>
-                  </tr>
-                  <tr>
-                    <td class="text-primary">mela@webtech.id</td>
-                    <td>Mela Agustin</td>
-                    <td>Bandung</td>
-                    <td>Female</td>
-                    <td>2003-04-07</td>
-                    <td>Guitar, Traveling, Coding.</td>
+                  <tr v-for="response in responses" :key="response.id">
+                    <td class="text-primary">{{ response.user.email }}</td>
+                    <td v-for="answer in response.answers" :key="answer.id">
+                      {{ answer.value }}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -112,14 +103,28 @@
   </body>
 </template>
 <script>
+import axios from "axios";
+import { API_URL } from "@/constant";
 export default {
   name: "Responses",
   data() {
     return {
       url: location.origin + `/forms/${this.$route.query.slug}`,
       slug: this.$route.query.slug,
+      form: null,
+      questions: null,
+      responses: null,
     };
   },
-  created() {},
+  created() {
+    const slug = this.$route.query.slug;
+    axios.defaults.headers.common["Authorization"] =
+      "Bearer " + localStorage.token;
+
+    axios.get(API_URL + "/forms/" + slug).then((res) => {
+      this.form = res.data.form;
+      this.questions = res.data.form.questions;
+    });
+  },
 };
 </script>
