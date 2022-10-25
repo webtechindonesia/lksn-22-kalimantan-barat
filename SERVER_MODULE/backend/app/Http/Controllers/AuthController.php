@@ -29,6 +29,9 @@ class AuthController extends Controller
         $user = $request->user();
         $token = $user->createToken('token')->plainTextToken;
 
+        $user->update([
+            'remember_token' => $token
+        ]);
         return response([
             "message" => "Login success",
             "user" => [
@@ -41,7 +44,9 @@ class AuthController extends Controller
 
     public function postLogout(Request $request)
     {
-        $request->user()->tokens()->delete();
+        $request->user()->update([
+            "remember_token" => null
+        ]);
         return response([
             "message" => "Logout success"
         ], 200);

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -20,6 +22,6 @@ class User extends Authenticatable
     }
     public function forms()
     {
-        return $this->hasMany(Form::class);
+        return $this->hasMany(Form::class, 'creator_id', 'id');
     }
 }

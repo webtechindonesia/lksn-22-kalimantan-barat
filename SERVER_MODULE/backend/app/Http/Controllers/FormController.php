@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AllowedDomain;
 use App\Models\Form;
 use App\Models\Question;
 use Illuminate\Contracts\Validation\Rule;
@@ -58,8 +59,10 @@ class FormController extends Controller
         }
         $form->load(['allowedDomains', 'questions']);
         $allowed = false;
-        foreach ($form->allowed_domains as $domain) {
-            if ($user->email == $domain) $allowed = true;
+        $user_domain = explode('@', $user->email)[1];
+
+        foreach ($form->allowedDomains as $domain) {
+            if ($user_domain == $domain->domain) $allowed = true;
         }
         if (!$allowed) {
             return response([
@@ -131,11 +134,11 @@ class FormController extends Controller
         }
         $questionQ = Question::where(['form_id' => $form->id, "id" => $question_id]);
         $question = $questionQ->get()->first();
-        if(!$question){
+        if (!$question) {
             return response([
-                "message"=>"Question not found"
+                "message" => "Question not found"
             ], 404);
-        } 
+        }
         $questionQ->delete();
         return response([
             "message" => "Remove question success"
@@ -146,7 +149,22 @@ class FormController extends Controller
      * Response
      */
 
-    public function postResponse(Request $request){
+    public function postResponse(Request $request, $slug)
+    {
+        $validator = Validator::make($request->all(), [
+            'answers' => 'required|array'
+            // 'value'=>RequiredIf::class
+        ]);
+        if ($validator->fails()) {
+            return response([
+                "message" => "Invalid field",
+                "errors" => $validator->getMessageBag()
+            ], 422);
+        }
+        $user = $request->user();
+        $domain = explode('@', $user->email)[1];
+        $form = Form::where(['slug' => $slug])->with('allowedDomains')->get()->first();
 
+        return $form->allowed_domains;
     }
 }

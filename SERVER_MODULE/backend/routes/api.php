@@ -16,22 +16,34 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('v1')->group(function () {
+Route::prefix('/v1')->group(function () {
     Route::group([
-        "prefix" => "auth",
+        "prefix" => "/auth",
         "controller" => AuthController::class
     ], function () {
-        Route::post('login', 'postLogin');
-        Route::post('logout', 'postLogout')->middleware('auth:api');
+        Route::post('/login', 'postLogin');
+        Route::post('/logout', 'postLogout')->middleware('auth:api');
     });
 
     Route::group([
-        "prefix" => "forms",
+        "prefix" => "/forms",
         "controller" => FormController::class,
         "middleware" => 'auth:api'
     ], function () {
         Route::post('/', 'postForm');
-        Route::get('/','getAllForm');
-        Route::get('/:slug', 'getDetailForm');
+        Route::get('/', 'getAllForm');
+        Route::get('/{slug}', 'getDetailForm');
+        Route::group([
+            'prefix' => '/{slug}/questions',
+        ], function () {
+            Route::post('/', 'postQuestion');
+            Route::delete('/{id}', 'deleteQuestion');
+        });
+        Route::group([
+            "prefix" => '/{slug}/responses',
+        ], function () {
+            Route::post('/','postResponse');
+
+        });
     });
 });

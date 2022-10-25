@@ -2,9 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Exception;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Support\Facades\Auth;
 
 class Authenticate extends Middleware
 {
@@ -23,7 +25,16 @@ class Authenticate extends Middleware
     public function handle($request, Closure $next, ...$guards)
     {
         try {
-            $this->authenticate($request, $guards);
+            $token = $request->header('Authorization');
+            $token = str_replace('Bearer ','', $token);
+
+            if (!$token) {
+                return response([
+                    "message" => "Unauthenticated"
+                ], 401);
+            }
+            $user = User::where(['remember_token' => $token])->get()->firstOrFail();
+            Auth::loginUsingId($user->id);
             return $next($request);
         } catch (Exception $e) {
             return response([
