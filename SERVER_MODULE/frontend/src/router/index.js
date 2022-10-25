@@ -8,7 +8,7 @@ const routes = [
     component: Login,
   },
   {
-    path: "/home",
+    path: "/manage-form",
     name: "manageForm",
     component: ManageForm,
   },
@@ -24,9 +24,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.auth && !localStorage.token) {
+  if (to.meta.auth && !localStorage.user) {
     next({ name: "login" });
-  } else if (to.name == "login" && localStorage.token) {
+  } else if (to.name == "login" && localStorage.user) {
     next({ name: "manageForm" });
   } else {
     next();

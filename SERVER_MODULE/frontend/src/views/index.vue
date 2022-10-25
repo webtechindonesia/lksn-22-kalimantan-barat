@@ -10,7 +10,10 @@
                 <div class="card-body">
                   <h3 class="mb-3">Login</h3>
 
-                  <form action="manage-forms.html">
+                  <form
+                    action="manage-forms.html"
+                    @submit.prevent="submitForm($event)"
+                  >
                     <!-- s: input -->
                     <div class="form-group my-3">
                       <label for="email" class="mb-1 text-muted"
@@ -56,12 +59,25 @@
   </body>
 </template>
 <script>
+import axios from "axios";
+import { API_URL } from "@/constant";
 export default {
   name: "Login",
-  methods:{
-   submitForm(){
-      
-   }
-  }
+  methods: {
+    submitForm(e) {
+      const form = new FormData(e.target);
+      const data = Object.fromEntries(form.entries());
+      axios
+        .post(API_URL + "/auth/login", data)
+        .then((res) => {
+          localStorage.user = JSON.stringify(res.data.user);
+          alert(res.data.message);
+          this.$router.push({ name: "manageForm" });
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
+    },
+  },
 };
 </script>
