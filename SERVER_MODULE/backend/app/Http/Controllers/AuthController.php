@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Dotenv\Repository\RepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -50,5 +51,9 @@ class AuthController extends Controller
         return response([
             "message" => "Logout success"
         ], 200);
+    }
+
+    public function getUser(Request $request){      
+        return response(User::where('id',$request->id)->get()->first(), 200);
     }
 }

@@ -21,6 +21,7 @@ Route::prefix('/v1')->group(function () {
         "prefix" => "/auth",
         "controller" => AuthController::class
     ], function () {
+        Route::get('/user', 'getUser');
         Route::post('/login', 'postLogin');
         Route::post('/logout', 'postLogout')->middleware('auth:api');
     });
