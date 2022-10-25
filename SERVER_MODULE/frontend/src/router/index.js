@@ -4,6 +4,8 @@ import ManageForm from "@/views/manage-forms.vue";
 import CreateForm from "@/views/create-form.vue";
 import DetailForm from "@/views/detail-form.vue";
 import Responses from "@/views/responses.vue";
+import SubmitForm from "@/views/submit-form.vue";
+
 const routes = [
   {
     path: "/",
@@ -41,6 +43,14 @@ const routes = [
     meta: {
       auth: true,
     },
+  },
+  {
+    path: "/forms/:slug",
+    name: "submitForm",
+    component: SubmitForm,
+    meta:{
+      auth:true
+    }
   },
   {
     path: "/:pathMatch(.*)*",

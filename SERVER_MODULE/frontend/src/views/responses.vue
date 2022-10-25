@@ -77,7 +77,9 @@
               <table class="table mt-3">
                 <caption>
                   Total Responses:
-                  {{responses}}
+                  {{
+                    responses
+                  }}
                 </caption>
                 <thead>
                   <tr class="text-muted">
