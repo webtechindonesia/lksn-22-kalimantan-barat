@@ -43,7 +43,7 @@ Route::prefix('/v1')->group(function () {
             "prefix" => '/{slug}/responses',
         ], function () {
             Route::post('/','postResponse');
-
+            Route::get('/', 'getAllResponse');
         });
     });
 });

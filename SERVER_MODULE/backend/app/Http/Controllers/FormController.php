@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\AllowedDomain;
 use App\Models\Form;
 use App\Models\Question;
-use Illuminate\Contracts\Validation\Rule;
+use App\Models\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\RequiredIf;
+use Illuminate\Validation\Rule;
 use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class FormController extends Controller
 {
@@ -83,8 +84,8 @@ class FormController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => "required",
-            "choice_type" => 'required',
-            "choices" => "required"
+            "choice_type" => Rule::in(['short answer', 'paragraph', 'date', 'multiple choice', 'dropdown', 'checkboxes']),
+            "choices" => Rule::requiredIf($request->choice_type == 'multiple choice' || $request->choice_type == 'dropdown' || $request->chioce_type == "checkboxes")
         ]);
         if ($validator->fails()) {
             return response([
@@ -104,9 +105,10 @@ class FormController extends Controller
                 "message" => "Forbidden access"
             ], 403);
         }
+
         $joinedArr = null;
         if (is_array($request->choices)) $joinedArr = join(',', $request->choices);
-        $question = Question::create([
+        $question = $form->questions()->create([
             "name" => $request->name,
             "choice_type" => $request->choice_type,
             "choices" => $joinedArr ?? $request->choices,
@@ -152,8 +154,8 @@ class FormController extends Controller
     public function postResponse(Request $request, $slug)
     {
         $validator = Validator::make($request->all(), [
-            'answers' => 'required|array'
-            // 'value'=>RequiredIf::class
+            'answers' => 'required|array',
+            'value' => Rule::requiredIf($request->is_required)
         ]);
         if ($validator->fails()) {
             return response([
@@ -161,10 +163,76 @@ class FormController extends Controller
                 "errors" => $validator->getMessageBag()
             ], 422);
         }
+        
         $user = $request->user();
-        $domain = explode('@', $user->email)[1];
+        $user_domain = explode('@', $user->email)[1];
         $form = Form::where(['slug' => $slug])->with('allowedDomains')->get()->first();
+        if (!$form) {
+            return response([
+                "message" => "Form not found"
+            ], 404);
+        }
+        if ($user->id != $form->creator_id) {
+            return response([
+                "message" => "Forbidden access"
+            ], 403);
+        }
+        $allowed = false;
+        foreach ($form->allowedDomains as $domain) {
+            if ($user_domain == $domain->domain) $allowed = true;
+        }
+        if (!$allowed) {
+            return response([
+                'message' => 'Forbidden Access'
+            ], 403);
+        }
+        if ($form->limit_one_response) {
+            $count = Response::where(["form_id" => $form->id, "user_id" => $user->id])->get()->first()->count();
+            if ($count > 0) {
+                return response([
+                    "message" => "You can not submit form twice"
+                ], 422);
+            }
+        }
 
-        return $form->allowed_domains;
+        $response = $form->responses()->create([
+            'user_id' => $user->id
+        ]);
+        foreach ($request->answers as $answer) {
+            $response->answers()->create([
+                'value' => $answer
+            ]);
+        }
+
+        return response([
+            "message" => "Submit response success"
+        ], 200);
+    }
+    public function getAllResponse(Request $request, $slug)
+    {
+        $user = $request->user();
+        $user_domain = explode('@', $user->email)[1];
+        $form = Form::where(['slug' => $slug])->with('allowedDomains')->get()->first();
+        if (!$form) {
+            return response([
+                "message" => "Form not found"
+            ], 404);
+        }
+        if ($user->id != $form->creator_id) {
+            return response([
+                "message" => "Forbidden access"
+            ], 403);
+        }
+        $allowed = false;
+        foreach ($form->allowedDomains as $domain) {
+            if ($user_domain == $domain->domain) $allowed = true;
+        }
+        if (!$allowed) {
+            return response([
+                'message' => 'Forbidden Access'
+            ], 403);
+        }
+        $response = Response::all()->load(['user', 'answers']);
+        return response($response, 200);
     }
 }
