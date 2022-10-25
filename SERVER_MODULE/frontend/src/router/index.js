@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "@/views";
 import ManageForm from "@/views/manage-forms.vue";
+import CreateForm from "@/views/create-form.vue";
+import DetailForm from "@/views/detail-form.vue";
 const routes = [
   {
     path: "/",
@@ -11,6 +13,22 @@ const routes = [
     path: "/manage-form",
     name: "manageForm",
     component: ManageForm,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/create-form",
+    name: "createForm",
+    component: CreateForm,
+    meta: {
+      auth: true,
+    },
+  },
+  {
+    path: "/detail-form",
+    name: "detailForm",
+    component: DetailForm,
   },
   {
     path: "/:pathMatch(.*)*",

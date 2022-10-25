@@ -71,6 +71,7 @@ export default {
         .post(API_URL + "/auth/login", data)
         .then((res) => {
           localStorage.user = JSON.stringify(res.data.user);
+          localStorage.token = res.data.user.access_token;
           alert(res.data.message);
           this.$router.push({ name: "manageForm" });
         })
