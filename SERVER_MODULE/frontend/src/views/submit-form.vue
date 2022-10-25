@@ -29,10 +29,10 @@
                     <div class="form-group">
                       <label for="name" class="mb-1 text-muted"
                         >{{ question.name }}
-                        <span class="text-danger">*</span></label
+                        <span class="text-danger" v-if="question.is_required">*</span></label
                       >
                       <input
-                        v-if="question.content_type == 'short answer'"
+                        v-if="question.choice_type == 'short answer'"
                         id="name"
                         type="text"
                         placeholder="Your answer"
@@ -42,13 +42,27 @@
                       />
 
                       <textarea
-                        v-if="question.content_type == 'paragraph'"
+                        v-if="question.choice_type == 'paragraph'"
                         id="address"
                         rows="4"
+                        :required="question.is_required"
                         placeholder="Your answer"
                         class="form-control"
                         name="address"
                       ></textarea>
+
+                      <div class="form-check" v-if="question.choice_type == 'multiple choice'" v-for="choice in question.choices.split(',')" :key="choice.id">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          value="Male"
+                          id="sex-male"
+                          name="sex"
+                        />
+                        <label class="form-check-label" for="sex-male">
+                        {{choice}}
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
