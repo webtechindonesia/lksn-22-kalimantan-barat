@@ -62,11 +62,14 @@
             </div>
           </div>
 
-          <div class="row justify-content-center" v-for="question in questions">
-            <div class="col-lg-5 col-md-6">
-              <div class="question-item card card-default my-4">
-                <div class="card-body">
-                  <div class="form-group my-3">
+          <!--  -->
+
+          <div class="row justify-content-center" >
+            <div class="col-lg-5 col-md-6" >
+              <div class="question-item card card-default my-4" v-for="(question, i) in questions" :key="i">
+                <div class="card-body" >
+
+                  <div class="form-group my-3" v-if="question.choice_type == 'short answer'" >
                     <input
                       type="text"
                       placeholder="Question"
@@ -77,238 +80,26 @@
                     />
                   </div>
 
-                  <div class="form-group my-3">
+                  <div class="form-group my-3" >
                     <select name="choice_type" class="form-select" disabled>
                       <option>Choice Type</option>
-                      <option selected value="short answer">
+                      <option :selected="question.content_type == 'short answer'" value="short answer" >
                         Short Answer
                       </option>
-                      <option value="paragraph">Paragraph</option>
-                      <option value="multiple choice">Multiple Choice</option>
-                      <option value="dropdown">Dropdown</option>
-                      <option value="checkboxes">Checkboxes</option>
+                      <option :selected="question.content_type == 'paragraph'" value="paragraph">Paragraph</option>
+                      <option :selected="question.content_type == 'multiple choice'" value="multiple choice">Multiple Choice</option>
+                      <option :selected="question.content_type == 'dropdown'" value="dropdown">Dropdown</option>
+                      <option :selected="question.content_type == 'checkboxes'" value="checkboxes">Checkboxes</option>
                     </select>
                   </div>
-                  <div class="form-check form-switch" aria-colspan="my-3">
+                  <div class="form-check form-switch" aria-colspan="my-3" >
                     <input
                       class="form-check-input"
                       type="checkbox"
                       role="switch"
                       id="required"
                       disabled
-                      checked
-                    />
-                    <label class="form-check-label" for="required"
-                      >Required</label
-                    >
-                  </div>
-                  <div class="mt-3">
-                    <button type="submit" class="btn btn-outline-danger">
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="question-item card card-default my-4">
-                <div class="card-body">
-                  <div class="form-group my-3">
-                    <input
-                      type="text"
-                      placeholder="Question"
-                      class="form-control"
-                      name="name"
-                      value="Address"
-                      disabled
-                    />
-                  </div>
-
-                  <div class="form-group my-3">
-                    <select name="choice_type" class="form-select" disabled>
-                      <option>Choice Type</option>
-                      <option value="short answer">Short Answer</option>
-                      <option selected value="paragraph">Paragraph</option>
-                      <option value="multiple choice">Multiple Choice</option>
-                      <option value="dropdown">Dropdown</option>
-                      <option value="checkboxes">Checkboxes</option>
-                    </select>
-                  </div>
-                  <div class="form-check form-switch" aria-colspan="my-3">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      role="switch"
-                      id="required"
-                    />
-                    <label class="form-check-label" for="required"
-                      >Required</label
-                    >
-                  </div>
-                  <div class="mt-3">
-                    <button type="submit" class="btn btn-outline-danger">
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="question-item card card-default my-4">
-                <div class="card-body">
-                  <div class="form-group my-3">
-                    <input
-                      type="text"
-                      placeholder="Question"
-                      class="form-control"
-                      name="name"
-                      value="Sex"
-                      disabled
-                    />
-                  </div>
-
-                  <div class="form-group my-3">
-                    <select name="choice_type" class="form-select" disabled>
-                      <option>Choice Type</option>
-                      <option value="short answer">Short Answer</option>
-                      <option value="paragraph">Paragraph</option>
-                      <option selected value="multiple choice">
-                        Multiple Choice
-                      </option>
-                      <option value="dropdown">Dropdown</option>
-                      <option value="checkboxes">Checkboxes</option>
-                    </select>
-                  </div>
-                  <div class="form-group my-3">
-                    <textarea
-                      placeholder="Choices"
-                      class="form-control"
-                      name="choices"
-                      rows="4"
-                      disabled
-                    >
-Male,Female,Others</textarea
-                    >
-                    <div class="form-text">
-                      Separate choices using comma ",".
-                    </div>
-                  </div>
-                  <div class="form-check form-switch" aria-colspan="my-3">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      role="switch"
-                      id="required"
-                      checked
-                      disabled
-                    />
-                    <label class="form-check-label" for="required"
-                      >Required</label
-                    >
-                  </div>
-                  <div class="mt-3">
-                    <button type="submit" class="btn btn-outline-danger">
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                class="question-item card card-default my-4"
-                v-for="(question, i) in questions"
-                :key="i"
-              >
-                <div class="card-body">
-                  <div class="form-group my-3">
-                    <input
-                      type="text"
-                      placeholder="Question"
-                      class="form-control"
-                      name="name"
-                      value="Born Date"
-                      disabled
-                    />
-                  </div>
-
-                  <div class="form-group my-3">
-                    <select name="chocie_type" class="form-select" disabled>
-                      <option>Choice Type</option>
-                      <option value="short answer">Short Answer</option>
-                      <option value="paragraph">Paragraph</option>
-                      <option selected value="date">Date</option>
-                      <option value="multiple choice">Multiple Choice</option>
-                      <option value="dropdown">Dropdown</option>
-                      <option value="checkboxes">Checkboxes</option>
-                    </select>
-                  </div>
-                  <div class="form-check form-switch" aria-colspan="my-3">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      role="switch"
-                      id="required"
-                      checked
-                      disabled
-                    />
-                    <label class="form-check-label" for="required"
-                      >Required</label
-                    >
-                  </div>
-                  <div class="mt-3">
-                    <button
-                      type="submit"
-                      class="btn btn-outline-danger"
-                      @click="remove(question.id)"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="question-item card card-default my-4">
-                <div class="card-body">
-                  <div class="form-group my-3">
-                    <input
-                      type="text"
-                      placeholder="Question"
-                      class="form-control"
-                      name="name"
-                      value="Hobbies"
-                      disabled
-                    />
-                  </div>
-
-                  <div class="form-group my-3">
-                    <select name="choice_type" class="form-select" disabled>
-                      <option>Choice Type</option>
-                      <option value="short answer">Short Answer</option>
-                      <option value="paragraph">Paragraph</option>
-                      <option value="multiple choice">Multiple Choice</option>
-                      <option value="dropdown">Dropdown</option>
-                      <option selected value="checkboxes">Checkboxes</option>
-                    </select>
-                  </div>
-                  <div class="form-group my-3">
-                    <textarea
-                      placeholder="Choices"
-                      class="form-control"
-                      name="choices"
-                      rows="4"
-                      disabled
-                    >
-Football,Guitar,Coding,Watching,Traveling</textarea
-                    >
-                    <div class="form-text">
-                      Separate choices using comma ",".
-                    </div>
-                  </div>
-                  <div class="form-check form-switch" aria-colspan="my-3">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      role="switch"
-                      id="required"
-                      disabled
+                      :checked="question.is_required"
                     />
                     <label class="form-check-label" for="required"
                       >Required</label
