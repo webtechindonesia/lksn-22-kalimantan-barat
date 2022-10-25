@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Form;
+use App\Models\Question;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -75,23 +76,77 @@ class FormController extends Controller
      * Question
      */
 
-    public function postQuestion(Request $request, $slug){
-        $validator = Validator::make($request->all(),[
-            'name'=>"required"
+    public function postQuestion(Request $request, $slug)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => "required",
+            "choice_type" => 'required',
+            "choices" => "required"
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response([
-                "message"=>"Invalid Field",
-                "error"=>$validator->getMessageBag()
+                "message" => "Invalid Field",
+                "error" => $validator->getMessageBag()
             ]);
         }
         $user = $request->user();
-        $form = Form::where('slug', $slug)->get()->first();
-        if($user->id != $form->creator_id){
+        $form = Form::where(['slug' => $slug])->get()->first();
+        if (!$form) {
             return response([
-                "message"=>"Forbidden access"
+                "message" => "Form not found"
+            ], 404);
+        }
+        if ($user->id != $form->creator_id) {
+            return response([
+                "message" => "Forbidden access"
             ], 403);
         }
-    
+        $joinedArr = null;
+        if (is_array($request->choices)) $joinedArr = join(',', $request->choices);
+        $question = Question::create([
+            "name" => $request->name,
+            "choice_type" => $request->choice_type,
+            "choices" => $joinedArr ?? $request->choices,
+            "is_required" => $request->is_required
+        ]);
+
+        return response([
+            "message" => "Add question success",
+            "question" => $question
+        ], 200);
+    }
+    public function deleteQuestion(Request $request, $slug, $question_id)
+    {
+        $user = $request->user();
+        $form = Form::where(['slug' => $slug])->get()->first();
+        if (!$form) {
+            return response([
+                "message" => "Form not found"
+            ], 404);
+        }
+        if ($user->id != $form->creator_id) {
+            return response([
+                "message" => "Forbidden access"
+            ], 403);
+        }
+        $questionQ = Question::where(['form_id' => $form->id, "id" => $question_id]);
+        $question = $questionQ->get()->first();
+        if(!$question){
+            return response([
+                "message"=>"Question not found"
+            ], 404);
+        } 
+        $questionQ->delete();
+        return response([
+            "message" => "Remove question success"
+        ], 200);
+    }
+
+    /**
+     * Response
+     */
+
+    public function postResponse(Request $request){
+
     }
 }

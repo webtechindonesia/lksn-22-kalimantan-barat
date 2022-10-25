@@ -31,5 +31,7 @@ Route::prefix('v1')->group(function () {
         "middleware" => 'auth:api'
     ], function () {
         Route::post('/', 'postForm');
+        Route::get('/','getAllForm');
+        Route::get('/:slug', 'getDetailForm');
     });
 });
