@@ -9,6 +9,7 @@ class Chart {
       vertical: 5,
     };
 
+    this.spaceLine = { x: 0 };
     this.startTanggal = 1;
     this.endTanggal = 8;
 
@@ -26,12 +27,14 @@ class Chart {
 
       if (this.max < this.data[o].jumlah) this.max = this.data[o].jumlah;
     });
-    console.log(this.max);
   }
   draw() {
     this.showLine();
+    this.showChart();
   }
   showLine() {
+    c.lineWidth = 1
+    c.strokeStyle = 'black'
     c.beginPath();
     c.moveTo(this.offset.x, this.offset.y);
     c.lineTo(this.offset.x, ch - this.offset.y);
@@ -58,24 +61,37 @@ class Chart {
       );
     }
 
-    for(let i = 1; i <= this.endTanggal ; i++){
-      let spaceLine = ((cw - this.offset.x * 2) / this.endTanggal - this.startTanggal) * i ;
-    
+    for (let i = 1; i <= this.endTanggal; i++) {
+      this.spaceLine.x =
+        ((cw - this.offset.x * 2) / this.endTanggal - this.startTanggal) * i;
+
       c.beginPath();
-      c.moveTo(this.offset.x + spaceLine, ch - this.offset.y);
-      c.lineTo(this.offset.x + spaceLine, ch - this.offset.y + 5);
+      c.moveTo(this.offset.x + this.spaceLine.x, ch - this.offset.y);
+      c.lineTo(this.offset.x + this.spaceLine.x, ch - this.offset.y + 5);
       c.stroke();
 
       c.font = "Arial 18px";
       c.fillText(
         i,
-        this.offset.x + spaceLine - 3,
+        this.offset.x + this.spaceLine.x - 3,
         ch - this.offset.y + 19
       );
     }
   }
-
-  update() {}
+  showChart() {
+    c.lineWidth = 5
+    c.strokeStyle = "red"
+    c.beginPath();
+    for (let i = 0; i < this.data.length; i++) {
+      let x = this.offset.x + ((cw - this.offset.x * 2) / this.endTanggal - this.startTanggal) * this.data[i].tanggal;
+      let y = ch - this.offset.y -
+        (this.data[i].jumlah / this.max) *
+        (ch - (this.offset.y * 2) / this.max) + this.offset.y * 2;
+      if (i == 0) c.moveTo(x, y);
+      else c.lineTo(x, y);
+    }
+    c.stroke();
+  }
 }
 
 let chart = new Chart({
@@ -124,7 +140,6 @@ const ch = (canvas.height = 400);
 
 const main = () => {
   c.clearRect(0, 0, cw, ch);
-  chart.update();
   chart.draw();
   requestAnimationFrame(main);
 };
