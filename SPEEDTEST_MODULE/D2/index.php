@@ -9,6 +9,7 @@ foreach ($data->messages as $message) {
   else $all[$message->text] += 1;
 }
 arsort($all);
+$total = sizeof($all);
 $top5 = array_splice($all, 0, 5);
 ?>
 
@@ -30,6 +31,8 @@ $top5 = array_splice($all, 0, 5);
         <?php endforeach; ?>
       </ul>
     </li>
+    <li>Total Message sent: <?= $total ?></li>
+    <li></li>
   </ul>
 </body>
 
