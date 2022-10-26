@@ -42,13 +42,32 @@ if (isset($_GET['filter'])) {
       <?php
       $query = new WP_Query($query);
       if ($post_type == 'anime') : ?>
-        <select name="filter" onchange="change(this)">
-          <option disabled>Filter:</option>
-          <option value="view_count">View Count</option>
-          <option value="asc">A-Z</option>
-          <option value="desc">Z-A</option>
-          <option value="date">Date</option>
-        </select>
+        <section class="filter_field">
+          <select id="filter" onchange="change(this)">
+            <option disabled selected>Filter:</option>
+            <option value="view_count">View Count</option>
+            <option value="asc">A-Z</option>
+            <option value="desc">Z-A</option>
+            <option value="date">Date</option>
+          </select>
+          <select id="season" onchange="change(this)">
+            <option disabled selected>Season:</option>
+            <option value="winter-2022">Winter 2022</option>
+            <option value="summer-2022">Summer 2022</option>
+            <option value="spring-2022">Spring 2022</option>
+            <option value="fall-2022">Fall 2022</option>
+            <option value="winter-2023">Winter 2023</option>
+          </select>
+          <select id="genre" onchange="change(this)">
+            <option disabled selected>Genre:</option>
+            <option value="winter-2022">Winter 2022</option>
+            <option value="summer-2022">Summer 2022</option>
+            <option value="spring-2022">Spring 2022</option>
+            <option value="fall-2022">Fall 2022</option>
+            <option value="winter-2023">Winter 2023</option>
+          </select>
+        </section>
+
         <?php
       endif;
       if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post()
