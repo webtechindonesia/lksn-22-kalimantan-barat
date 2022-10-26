@@ -6,9 +6,11 @@ class Chart {
     this.max = 0;
     this.small = 0;
     this.space = {
-      horizontal: 0,
       vertical: 5,
     };
+
+    this.startTanggal = 1;
+    this.endTanggal = 8;
 
     this.offset = {
       x: 30,
@@ -41,14 +43,36 @@ class Chart {
     c.stroke();
 
     for (let i = 0; i < this.space.vertical; i++) {
-      let space = this.max - (this.max / 5) * i;
+      let space = this.max - (this.max / 5) * (this.space.vertical - i - 1);
+      let spaceLine = (ch - this.offset.y * 2) / this.space.vertical;
       c.beginPath();
-      c.moveTo(this.offset.x, this.offset.y - space + i * this.offset.y);
-      c.lineTo(this.offset.x - 5, this.offset.y - space + i * this.offset.y);
+      c.moveTo(this.offset.x, ch - this.offset.y * 2 - spaceLine * i);
+      c.lineTo(this.offset.x - 5, ch - this.offset.y * 2 - spaceLine * i);
       c.stroke();
 
       c.font = "Arial 18px";
-      c.fillText(space, this.offset.x - 10 - 9, this.offset.y - space + i * this.offset.y);
+      c.fillText(
+        space,
+        this.offset.x - 10 - 9,
+        ch - this.offset.y * 2 - spaceLine * i
+      );
+    }
+
+    for(let i = 1; i <= this.endTanggal ; i++){
+      let spaceLine = ((cw - this.offset.x * 2) / this.endTanggal - this.startTanggal) * i ;
+      
+      console.log(spaceLine)
+      c.beginPath();
+      c.moveTo(this.offset.x + spaceLine, ch - this.offset.y);
+      c.lineTo(this.offset.x + spaceLine, ch - this.offset.y + 5);
+      c.stroke();
+
+      c.font = "Arial 18px";
+      c.fillText(
+        i,
+        this.offset.x + spaceLine - 3,
+        ch - this.offset.y + 19
+      );
     }
   }
 
