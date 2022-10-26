@@ -1,7 +1,14 @@
 <?php get_header() ?>
 <main class="container">
-  <section class="banner">
+  <section class="banner" style="background: url('<?= DIR ?>/assets/spyfamily-2.jpg'); background-size:cover;">
     <div class="banner-overlay"></div>
+    <div class="banner-content">
+      <div class="banner-text">
+        <h1 class="banner-title">Let's watch anime and heal ourselves</h1>
+        <p class="banner-slogan">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nisl arcu, viverra non luctus nec, dictum sed nisl. Integer porta turpis sed condimentum pretium.</p>
+      </div>
+      <div class="banner-thumbnail" style="background: url('<?= DIR ?>/assets/spyfamily-1.jpg'); background-repeat:no-repeat;"></div>
+    </div>
   </section>
   <section class="posts">
     <h1>Recommendation</h1>

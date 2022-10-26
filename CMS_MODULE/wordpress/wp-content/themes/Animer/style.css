@@ -19,7 +19,7 @@ li {
   list-style-type: none;
 }
 .nav {
-  z-index: 10;
+  z-index: 100;
   position: fixed;
   width: 100%;
   height: 30px;
@@ -47,34 +47,82 @@ li {
   top: 100%;
 }
 .sub-menu li a {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  background: white;
 }
-#top{
+#top {
   display: block;
   height: 30px;
 }
-.banner{
+.banner {
   height: 100vh;
   width: 100%;
 }
-footer{
+footer {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-.btn-toTop{
+.btn-toTop {
   width: 50px;
   height: 50px;
   position: fixed;
-  right:10%;
-  bottom:10%;
-  transform: translate(10%,10%);
+  right: 10%;
+  bottom: 10%;
+  transform: translate(10%, 10%);
   border-radius: 50%;
-  background-color: rgba(0,0,0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
+}
+.banner {
+  position: relative;
+  border: 1px solid black;
+}
+.banner-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+.banner-content {
+  z-index: 10;
+  color: white;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  height: 100%;
+  border: 1px solid black;
+  align-items: center;
+  justify-items: center;
+}
+.banner-text{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 50px;
+}
+.banner-title{
+  z-index: 10;
+  text-transform: uppercase;
+  font-size: 3rem;
+}
+.banner-slogan{
+  width: 70%;
+}
+.banner-text{
+  z-index: 10;
+}
+.banner-thumbnail{
+  width: 50%;
+  height: 85%;
+  z-index: 9;
+
 }
