@@ -276,3 +276,12 @@ footer {
 .filter_field{
   display: flex;
 }
+.preview{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 20px 0;
+}
+.preview h3{
+  border-bottom:2px solid black;
+}

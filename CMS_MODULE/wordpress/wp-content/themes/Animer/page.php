@@ -60,11 +60,10 @@ if (isset($_GET['filter'])) {
           </select>
           <select id="genre" onchange="change(this)">
             <option disabled selected>Genre:</option>
-            <option value="winter-2022">Winter 2022</option>
-            <option value="summer-2022">Summer 2022</option>
-            <option value="spring-2022">Spring 2022</option>
-            <option value="fall-2022">Fall 2022</option>
-            <option value="winter-2023">Winter 2023</option>
+            <option value="action">Action</option>
+            <option value="action">Comedy</option>
+            <option value="romance">Romance</option>
+            <option value="sport">Sport</option>
           </select>
         </section>
 
@@ -92,6 +91,7 @@ if (isset($_GET['filter'])) {
 <?php get_footer() ?>
 <script>
   const change = (event) => {
+    location.href = location.origin + location.pathname + `?filter=${filter.value}&season=${season.value}&genre=${genre.value}`
     location.href = location.origin + location.pathname + `?filter=${event.value}`
   }
 </script>

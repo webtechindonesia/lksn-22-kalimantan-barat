@@ -9,6 +9,11 @@ update_field('view_count', $view, get_the_ID());
   <section class="single-post-content">
     <h1><?= the_title() ?> <span class="view_count">View Count: <?= the_field('view_count') ?></span></h1>
     <p><?= the_content() ?></p>
+    <section class="preview">
+      <h3>Preview</h3>
+      <?= the_field('embed') ?>
+    </section>
+
     <p class="date">published date: <?= the_date() ?></p>
     <?php $options = get_option('ratings'); ?>
     <form method="post" class="rating_form" action="<?= admin_url('admin-post.php') ?>" class="ratings">
