@@ -147,6 +147,7 @@ footer {
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 2rem;
 }
 .card-thumbnail {
   width: 30%;
@@ -199,6 +200,7 @@ footer {
   padding: 20px;
   display: grid;
   grid-template-columns: 33% 33% 33%;
+  gap: 2rem;
 }
 .col-3 .card {
   position: relative;
@@ -250,4 +252,24 @@ footer {
 
 .container{
   min-height: 100vh;
+}
+.single-post{
+  height: 70vh;
+  margin-bottom: 5rem;
+}
+.view_count{
+  font-size: small;
+  color: #637b86;
+}
+.single-post-content{
+  text-align: justify;
+  padding: 0 20px;
+}
+.single-post-content h1{
+  margin-bottom: .5rem;
+}
+.date{
+  margin-top: 2rem;
+  color: grey;
+  font-style: italic;
 }

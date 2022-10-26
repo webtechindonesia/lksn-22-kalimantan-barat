@@ -20,6 +20,8 @@ add_action('init', function () {
     'public' => true,
     'taxonomies' => ['category']
   ]);
+
+  add_option('ratings', []);
 });
 
 add_action('admin_menu', function () {
@@ -30,6 +32,10 @@ add_action('login_head', function () {
   <style>
   #login h1{
     display:none;
+  }
+  body{
+    background:url(" . DIR . "/assets/black-summoner-2.jpg);
+    background-size:cover;
   }
   </style>
   ";
@@ -54,4 +60,18 @@ add_shortcode('anime-gallery', function ($atts) {
 
 add_action('excerpt_length', function () {
   return rand(20, 30);
+});
+
+
+add_action('admin_post_ratings', function () {
+  $id = $_GET['page'];
+  $rate = $_GET['rate'];
+
+  $option = get_option('ratings');
+  if (!isset($option[$id])) {
+    $option[$id] = [];
+  }
+  array_push($option[$id], $rate);
+  update_option('ratings', $option);
+  wp_redirect(wp_get_referer());
 });

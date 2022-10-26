@@ -9,6 +9,13 @@
       $post_type = str_contains($post, 'rticle') ? 'article' : $post_type;
       $post_type = str_contains($post, 'nime') ? 'anime' : $post_type;
       $query = new WP_Query(['post_type' => $post_type]);
+      if($post_type == 'anime'):?>
+        <select name="filter" >
+          <option disabled>Filter:</option>
+          
+        </select>
+      <?php
+      endif;
       if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post()
       ?>
           <div class="card">

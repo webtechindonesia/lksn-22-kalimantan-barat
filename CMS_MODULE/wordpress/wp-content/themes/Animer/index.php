@@ -14,7 +14,7 @@
     <h1>Recommendation</h1>
     <div class="cards">
       <?php
-      $query = new WP_Query(['post_type' => 'anime']);
+      $query = new WP_Query(['post_type' => 'anime', 'meta_key' => 'view_count', 'orderby' => 'meta_value_num', 'posts_per_page' => 4]);
       if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post()
       ?>
           <div class="card">
