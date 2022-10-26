@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>B1 | Masonry Layout</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      div{
+        background: lightgray;
+        border: 10px solid white;
+      }
+      .l1 {
+        grid-area: l1;
+      }
+      .l2 {
+        grid-area: l2;
+      }
+      .l3 {
+        grid-area: l3;
+      }
+      .m1 {
+        grid-area: m1;
+      }
+      .m2 {
+        grid-area: m2;
+      }
+      .m3 {
+        grid-area: m3;
+      }
+      .r1{
+        grid-area: r1;
+      }
+      .r2{
+        grid-area: r2;
+      }
+      .r3{
+        grid-area: r3;
+      }
+      body{
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .container {
+        width: 960px;
+        height: 700px;
+        display: grid;
+        grid-template-areas: 
+        'l1 l1 l1 m1 m1 m1 r1 r1 r1'
+        'l1 l1 l1 m1 m1 m1 r1 r1 r1'
+        'l1 l1 l1 m1 m1 m1 r1 r1 r1'
+        'l1 l1 l1 m2 m2 m2 r1 r1 r1'
+        'l1 l1 l1 m2 m2 m2 r2 r2 r2'
+        'l1 l1 l1 m2 m2 m2 r2 r2 r2'
+        'l2 l2 l2 m2 m2 m2 r2 r2 r2'
+        'l2 l2 l2 m2 m2 m2 r3 r3 r3'
+        'l2 l2 l2 m2 m2 m2 r3 r3 r3'
+        'l3 l3 l3 m3 m3 m3 r3 r3 r3'
+        'l3 l3 l3 m3 m3 m3 r3 r3 r3'
+        'l3 l3 l3 m3 m3 m3 r3 r3 r3'
+        ;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <div class="l1"></div>
+      <div class="l2"></div>
+      <div class="l3"></div>
+      <div class="m1"></div>
+      <div class="m2"></div>
+      <div class="m3"></div>
+      <div class="r1"></div>
+      <div class="r2"></div>
+      <div class="r3"></div>
+    </main>
+  </body>
+</html>
