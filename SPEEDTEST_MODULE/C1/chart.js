@@ -60,8 +60,7 @@ class Chart {
 
     for(let i = 1; i <= this.endTanggal ; i++){
       let spaceLine = ((cw - this.offset.x * 2) / this.endTanggal - this.startTanggal) * i ;
-      
-      console.log(spaceLine)
+    
       c.beginPath();
       c.moveTo(this.offset.x + spaceLine, ch - this.offset.y);
       c.lineTo(this.offset.x + spaceLine, ch - this.offset.y + 5);
