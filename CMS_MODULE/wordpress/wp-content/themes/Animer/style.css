@@ -10,6 +10,8 @@ Description: AnimerV1 Theme
   box-sizing: border-box;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
+  scroll-behavior: smooth;
 }
 a {
   color: inherit;
@@ -23,7 +25,7 @@ li {
   position: fixed;
   width: 100%;
   height: 30px;
-  background: grey;
+  background: #637b86;
   padding: 0 20px;
 }
 .nav .menu {
@@ -38,7 +40,7 @@ li {
   justify-content: center;
   height: 30px;
 }
-.nav:hover .menu-item-has-children > .sub-menu {
+.menu-item-has-children:hover > .sub-menu {
   display: block;
 }
 .menu-item-has-children > .sub-menu {
@@ -51,7 +53,8 @@ li {
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  background: white;
+  padding: 8px;
+  background: #8baaba;
 }
 #top {
   display: block;
@@ -102,27 +105,149 @@ footer {
   align-items: center;
   justify-items: center;
 }
-.banner-text{
+.banner-text {
   display: flex;
   align-content: center;
   justify-content: center;
   flex-direction: column;
   padding: 50px;
 }
-.banner-title{
+.banner-title {
   z-index: 10;
   text-transform: uppercase;
   font-size: 3rem;
 }
-.banner-slogan{
+.banner-slogan {
   width: 70%;
 }
-.banner-text{
+.banner-text {
   z-index: 10;
 }
-.banner-thumbnail{
+.banner-thumbnail {
   width: 50%;
   height: 85%;
   z-index: 9;
+}
 
+.posts {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 2rem;
+  margin-top: 5rem;
+}
+.card {
+  display: flex;
+  width: 80%;
+  border: 1px solid black;
+  text-align: left;
+}
+.cards {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.card-thumbnail {
+  width: 30%;
+}
+.card-content {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 70%;
+}
+.card-button {
+  display: flex;
+}
+.card-button a {
+  padding: 10px;
+  border: 1px solid #8baaba;
+  color: #8baaba;
+}
+.card-button a:hover {
+  background: #8baaba;
+  color: white;
+}
+footer {
+  margin-top: 5rem;
+  background: #637b86;
+}
+.social-icons {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+.social-icons a:hover {
+  background-color: #8baaba;
+}
+
+.col-3 {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+}
+.col-3 .card {
+  position: relative;
+  color: white;
+}
+.col-3 .card-thumbnail {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  filter: brightness(50%);
+}
+
+@media screen and (max-width: 768px) {
+  .col-3 {
+    width: 85%;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: auto;
+  }
+  .card .card-content {
+    max-width: 100%;
+  }
+  .card .card-thumbnail {
+    display: none;
+  }
+  .col-3 .card {
+    position: relative;
+    color: white;
+  }
+  .col-3 .card-thumbnail {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    filter: brightness(50%);
+  }
+  .banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: medium;
+  }
+  .banner-thumbnail {
+    display: none;
+  }
+}
+
+.container{
+  min-height: 100vh;
 }

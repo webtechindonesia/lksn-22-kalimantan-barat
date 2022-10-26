@@ -22,7 +22,7 @@ add_action('init', function () {
   ]);
 });
 
-add_action('admin_menu', function(){
+add_action('admin_menu', function () {
   remove_menu_page('edit.php');
 });
 add_action('login_head', function () {
@@ -40,6 +40,16 @@ add_shortcode('anime-gallery', function ($atts) {
     'id' => "PLACE-ID",
     'ani' => 'ani'
   ], $atts);
+
+  $query = new WP_Query(['post_type' => 'anime', 'category_name' => esc_attr('ani')]);
+?>
+  <div id="<?= esc_attr('id') ?>" class="gallery">
+    <?php if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post() ?>
+        <div class="gallery-block" style="background: url('<?= get_the_post_thumbnail_url() ?>');"></div>
+    <?php endwhile;
+    endif; ?>
+  </div>
+<?php
 });
 
 add_action('excerpt_length', function () {
