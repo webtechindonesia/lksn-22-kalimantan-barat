@@ -62,7 +62,7 @@ export default class Game {
           dy = h.p.y - dist.y,
           dis = Math.sqrt(dx * dx + dy * dy);
 
-        let inside = dis < rad;
+        let inside = dis < rad && h.key != this.hoveredBlock.key;
         if (inside) {
           if (
             h.color != "" &&
@@ -70,9 +70,9 @@ export default class Game {
             h.value != 0 &&
             h.value < this.hoveredBlock.value
           ) {
+            console.log('preview')
             h.previewChangeColor();
-          }
-          else if (h.color == this.turn && h.value != 0) {
+          } else if (h.color == this.turn && h.value != 0) {
             h.previewChangeValue();
           }
         }
@@ -88,8 +88,8 @@ export default class Game {
         this.hexagonMaps.push(new Hexagon(newX, newY));
       }
     }
-    for(let i = 0; i < 2 + this.gameLevel * 2; i++){
-        this.hexagonMaps[~~(Math.random() * hor * ver)].disabled = true
+    for (let i = 0; i < 2 + this.gameLevel * 2; i++) {
+      this.hexagonMaps[~~(Math.random() * hor * ver)].disabled = true;
     }
   }
   background() {

@@ -1,5 +1,6 @@
 export default class Hexagon {
   constructor(x, y) {
+    this.key = `${x}|${y}`
     this.color = "";
     this.value = 0;
     this.p = { x, y };
