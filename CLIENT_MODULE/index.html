@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <section class="container active">
+    <section class="container ">
       <section class="content">
         <img src="./assets/logo.png" alt="HEXARIA" />
         <h1>Welcome to our Game</h1>
@@ -49,14 +49,27 @@
                 <label for="p2">Player 2: <span class="sub">(username)</span></label>
                 <input type="text" name="p2" id="p2">
             </div>
+            <div class="input-field">
+                <label for="level"></label>
+                <select name="level" id="level">
+                    <option value="1">Easy</option>
+                    <option value="2">Medium</option>
+                    <option value="3">Hard</option>
+                </select>
+            </div>
         </div>
         <button type="button" class="process-button" id="processBtn">Process</button>
     </section>
     <!-- 2 hr Function 2 hr Frontend -->
-    <section class="game">
+    <section class="game active">
         <section class="side">
             <canvas></canvas>
-            <section class="leaderboard"></section>
+            <section class="leaderboard">
+                <h4>Leaderboard</h4>
+                <ul>
+                    
+                </ul>
+            </section>
         </section>
     </section>
   </body>

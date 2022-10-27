@@ -3,11 +3,14 @@ import Game from "./struct/Game.js";
 let game;
 
 const main = async () => {
-  console.log('dsad')
-  let audio = new Audio('./js/click.mp3');
+  console.log("dsad");
+  let audio = new Audio("./js/click.mp3");
   game = new Game(audio, form);
+
+  leaderboard();
   update();
 };
+const leaderboard = () => {};
 const update = () => {
   c.clearRect(0, 0, cw, ch);
   game.update();
@@ -26,14 +29,16 @@ start.addEventListener("click", (e) => {
 process.addEventListener("click", (e) => {
   if (!p1.value || !p2.value) {
     alert("Please Enter The Username Field");
-    return
+    return;
   }
   form.p1 = p1.value;
   form.p2 = p2.value;
+  form.gameLevel = level.value;
   instruction.classList.remove("active");
   inputName.classList.remove("active");
   gameField.classList.add("active");
-  canvas.hidden = false
+  canvas.hidden = false;
 
   main();
 });
+main();

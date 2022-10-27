@@ -13,17 +13,17 @@ const dir = [
   [-check.width / 2, -check.height],
 ];
 export default class Game {
-  constructor(audio,{ gameMode, p1, p2 }) {
+  constructor(audio, { gameMode, gameLevel, p1, p2 }) {
     this.audio = {
       click: audio,
     };
     this.uP1 = p1;
     this.uP2 = p2;
-    this.gameLevel = 1;
+    this.gameLevel = gameLevel;
 
     this.bot = !gameMode;
-    this.p1 = "red";
-    this.p2 = "blue";
+    this.p1 = "#dc143c";
+    this.p2 = "#6495ed";
     this.turn = this.p1;
 
     this.p1Score = 0;
@@ -43,13 +43,14 @@ export default class Game {
     this.listener();
   }
   draw() {
-    // if (this.gameOver) return;
+    if (this.gameOver) return;
 
     this.background();
     this.hexagonMaps.map((h) => h.draw());
+    this.interface()
   }
   update() {
-    // if (this.gameOver) return;
+    if (this.gameOver) return;
     this.hexagonMaps.map((h) => h.update());
     this.hover();
     this.score();
@@ -167,17 +168,23 @@ export default class Game {
         allFilled = false;
       }
     });
-    
+
     if (allFilled) {
       alert("Game Over");
-      let arr = localStorage.getItem("win") ?? [];
+      this.gameOver = true;
+      let arr = JSON.parse(localStorage.getItem("win")) ?? [];
       let uP1 = this.uP1,
         uP2 = this.uP2;
+
       arr.push({
-        [uP1]: this.p1Score,
-        [uP2]: this.p2Score,
+        user1: uP1,
+        user2: uP2,
+        score1: this.p1Score,
+        score2: this.p2Score,
+        date: Date.now(),
       });
-      localStorage.setItem("win", arr)
+
+      localStorage.setItem("win", JSON.stringify(arr));
     }
   }
   botMove() {
@@ -208,6 +215,30 @@ export default class Game {
         k++;
       }, 300);
     }
+  }
+  interface() {
+    c.fillStyle = this.p1
+    c.textAlign = "center";
+    c.font = "20px Arial";
+    c.fillText(this.uP1, cw / 2 - 30, ch * 0.8);
+
+    c.fillStyle = this.p2
+    c.textAlign = "center";
+    c.font = "20px Arial";
+    c.fillText(this.uP1, (cw / 2) + 30, ch * 0.8);
+
+    c.font = "16px Arial";
+    c.textAlign = "center";
+    c.fillStyle = "white";
+    c.fillText(this.p1Score, cw / 2 - 20, ch * 0.8 + 20);
+
+    c.font = "16px Arial";
+    c.textAlign = "center";
+    c.fillStyle = "white";
+    c.fillText(this.p2Score, (cw / 2) + 20, ch * 0.8 + 20);
+
+    c.fillStyle = this.turn;
+    c.fillRect(0, 0, cw, 20);
   }
   listener() {
     canvas.addEventListener("mousedown", (e) => {
