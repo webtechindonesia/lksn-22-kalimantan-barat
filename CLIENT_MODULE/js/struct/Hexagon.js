@@ -19,13 +19,13 @@ export default class Hexagon {
   }
   previewChangeColor(){
     this.previewHex = {
-      val: this.val,
+      val: this.value,
       color: "yellow"
     }
   }
   previewChangeValue(){
     this.previewHex = {
-      val: this.val + " + 1",
+      val: this.value + " + 1",
       color: this.color
     }
   }
