@@ -7,7 +7,7 @@ const main = async () => {
   let audio = new Audio("./js/click.mp3");
   game = new Game(audio, form);
 
-  leaderboard();
+  // leaderboard();
   update();
 };
 const leaderboard = () => {
