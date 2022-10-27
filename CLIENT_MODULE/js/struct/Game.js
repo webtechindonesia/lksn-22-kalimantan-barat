@@ -13,14 +13,15 @@ const dir = [
   [-check.width / 2, -check.height],
 ];
 export default class Game {
-  constructor() {
+  constructor({ gameMode, p1, p2 }) {
     // this.audio = {
     //   click: audio,
     // };
-
+    this.uP1 = p1;
+    this.uP2 = p2;
     this.gameLevel = 1;
 
-    this.bot = true;
+    this.bot = !gameMode;
     this.p1 = "red";
     this.p2 = "blue";
     this.turn = this.p1;
@@ -169,12 +170,22 @@ export default class Game {
     if (allFilled) {
       alert("Game Over");
       this.gameOver = true;
-      console.log(this.p1Score);
-      console.log(this.p2Score);
+      // let arr = localStorage.getItem("win") ?? [];
+      // let uP1 = this.uP1,
+      //   uP2 = this.uP2;
+      // arr.push([
+      //   {
+      //     username1: uP1,
+      //     username2: uP2,
+      //     score1: this.p1Score,
+      //     score2: this.p2Score,
+      //   },
+      // ]);
+      // localStorage.setItem("win", arr);
     }
   }
   botMove() {
-    if (this.turn == this.p2) {
+    if (this.turn == this.p2 && this.bot) {
       let arr = [];
       let filtered = this.hexagonMaps.filter(
         (a) => a.color == "" && !a.disabled

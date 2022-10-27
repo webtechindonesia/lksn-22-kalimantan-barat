@@ -5,7 +5,7 @@ let game;
 // const assets = "../assets";
 const main = async () => {
   //   let audio = await loadAudio(assets + "/click.mp3");
-  game = new Game();
+  game = new Game(form);
   update();
 };
 const update = () => {
@@ -21,17 +21,16 @@ start.addEventListener("click", (e) => {
   instruction.hidden = true;
   instruction.classList.toggle("active");
   inputName.classList.toggle("active");
-  main();
 });
 
 process.addEventListener('click', (e)=>{
   if(!p1.value || !p2.value){
     alert('Please Enter The Username Field')
   }
+  form.p1 = p1.value
+  form.p2 = p2.value
   instruction.classList.remove('active')
   inputName.classList.remove('active')
   gameField.classList.add('active')
   main();
 })
-
-main();
