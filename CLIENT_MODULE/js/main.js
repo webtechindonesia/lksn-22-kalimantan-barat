@@ -24,6 +24,10 @@ const leaderboard = () => {
     leaderboardDOM.appendChild(li);
   });
 };
+
+filterVal.addEventListener("change", () => {
+  filter();
+});
 const filter = () => {
   const data = JSON.parse(localStorage.win);
   if (filterVal.value == "date") {
@@ -104,4 +108,3 @@ p1.addEventListener("keyup", (e) => {
 p2.addEventListener("keyup", (e) => {
   unDisableBtn();
 });
-main();

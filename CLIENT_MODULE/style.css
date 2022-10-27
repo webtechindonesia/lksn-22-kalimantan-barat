@@ -69,6 +69,17 @@ input:not(:checked) + label:hover {
   flex-direction: column;
   gap: 1rem;
 }
+.container {
+  animation: pagein ease-in-out 1s forwards;
+}
+@keyframes pagein {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
 .form span {
   display: block;
   font-size: 1em;
@@ -160,25 +171,32 @@ input[type="text"] {
   display: none;
 }
 .game.active {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
-.game .side{
-    display: flex;
-    flex-direction: row;
+.game .side {
+  display: flex;
+  flex-direction: row;
 }
-.leaderboard{
-    padding: 20px 0;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 150px;
-    height: 500px;
-    background: rgb(59, 59, 59);
-    border: 1px solid white;
+.leaderboard {
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 150px;
+  height: 500px;
+  background: rgb(59, 59, 59);
+  border: 1px solid white;
 }
-.leaderboard li{
+.leaderboard li {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.end {
+  display: none;
+}
+.end.active{
+  display: flex;
+  border:1px solid black;
 }

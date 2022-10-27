@@ -63,14 +63,20 @@
       </button>
     </section>
     <!-- 2 hr Function 2 hr Frontend -->
-    <section class="game ">
-      <img src="./assets/logo.png" height="100" width="600" class="logo" alt="HEXARIA" />
+    <section class="game">
+      <img
+        src="./assets/logo.png"
+        height="100"
+        width="600"
+        class="logo"
+        alt="HEXARIA"
+      />
 
       <section class="side">
         <canvas></canvas>
         <section class="leaderboard">
           <h4>Leaderboard</h4>
-          <select name="filter" id="filter" onchange="filter()">
+          <select name="filter" id="filter">
             <option value="score">Score</option>
             <option value="date">Date</option>
           </select>
@@ -79,7 +85,15 @@
       </section>
     </section>
     <section class="end">
-      <a href="" class="button">Restart</a>
+        <div id="user1">
+            <div class="username"></div>
+            <div class="score"></div>
+        </div>
+        <div id="user2">
+            <div class="username"></div>
+            <div class="score"></div>
+        </div>
+      <a href=""  class="button" onclick="location.href='.'">Restart</a>
     </section>
   </body>
 </html>

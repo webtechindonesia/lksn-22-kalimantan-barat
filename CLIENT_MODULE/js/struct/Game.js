@@ -47,7 +47,7 @@ export default class Game {
 
     this.background();
     this.hexagonMaps.map((h) => h.draw());
-    this.interface()
+    this.interface();
   }
   update() {
     if (this.gameOver) return;
@@ -183,7 +183,14 @@ export default class Game {
         score2: this.p2Score,
         date: Date.now(),
       });
-
+      endSection.classList.add("active");
+      gameField.classList.remove('active')
+      getTableData({
+        user1: this.uP1,
+        user2: this.uP2,
+        score1: this.p1Score,
+        score2: this.p2Score,
+      });
       localStorage.setItem("win", JSON.stringify(arr));
     }
   }
@@ -217,15 +224,15 @@ export default class Game {
     }
   }
   interface() {
-    c.fillStyle = this.p1
+    c.fillStyle = this.p1;
     c.textAlign = "center";
     c.font = "20px Arial";
     c.fillText(this.uP1, cw / 2 - 30, ch * 0.8);
 
-    c.fillStyle = this.p2
+    c.fillStyle = this.p2;
     c.textAlign = "center";
     c.font = "20px Arial";
-    c.fillText(this.uP1, (cw / 2) + 30, ch * 0.8);
+    c.fillText(this.uP1, cw / 2 + 30, ch * 0.8);
 
     c.font = "16px Arial";
     c.textAlign = "center";
@@ -235,10 +242,12 @@ export default class Game {
     c.font = "16px Arial";
     c.textAlign = "center";
     c.fillStyle = "white";
-    c.fillText(this.p2Score, (cw / 2) + 20, ch * 0.8 + 20);
+    c.fillText(this.p2Score, cw / 2 + 20, ch * 0.8 + 20);
 
     c.fillStyle = this.turn;
-    c.fillRect(0, 0, cw, 20);
+    c.fillRect(0, ch - 90, cw, 20);
+    c.fillStyle = "white";
+    c.fillText(this.currentValue, cw / 2, ch - 75);
   }
   listener() {
     canvas.addEventListener("mousedown", (e) => {

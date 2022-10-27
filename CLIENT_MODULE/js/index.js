@@ -40,5 +40,23 @@ const process = document.getElementById("processBtn");
 const gameField = document.querySelector(".game");
 const level = document.querySelector("#level");
 
-const leaderboardDOM = document.querySelector('#leaderboard')
-const filterVal = document.getElementById('id')
+const leaderboardDOM = document.querySelector("#leaderboard");
+const filterVal = document.getElementById("filter");
+
+const table = document.getElementById("over-table");
+const endSection = document.querySelector(".end");
+
+const user1 = document.getElementById("user1");
+const user2 = document.getElementById("user2");
+const getTableData = (data) => {
+  user1.children[0].innerHTML = data.user1;
+  user1.children[1].innerHTML = data.score1;
+
+  user2.children[0].innerHTML = data.user2;
+  user2.children[1].innerHTML = data.score2;
+  if (data.score1 > data.score2) {
+    alert(data.user1 + " IS THE WINNER");
+  } else {
+    alert(data.user1 + " IS THE WINNER");
+  }
+};
