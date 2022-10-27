@@ -171,8 +171,14 @@ input[type="text"] {
     padding: 20px 0;
     display: flex;
     justify-content: center;
+    flex-direction: column;
     width: 150px;
     height: 500px;
     background: rgb(59, 59, 59);
     border: 1px solid white;
+}
+.leaderboard li{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

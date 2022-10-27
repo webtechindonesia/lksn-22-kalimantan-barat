@@ -39,3 +39,6 @@ const start = document.getElementById("startBtn");
 const process = document.getElementById("processBtn");
 const gameField = document.querySelector(".game");
 const level = document.querySelector("#level");
+
+const leaderboardDOM = document.querySelector('#leaderboard')
+const filterVal = document.getElementById('id')

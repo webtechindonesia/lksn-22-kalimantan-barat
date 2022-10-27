@@ -10,7 +10,54 @@ const main = async () => {
   leaderboard();
   update();
 };
-const leaderboard = () => {};
+const leaderboard = () => {
+  const data = JSON.parse(localStorage.win);
+  console.log(data.sort((a, b) => a.score1 + b.score1 - (a.score2 - b.score)));
+  data.map((d) => {
+    const li = document.createElement("li");
+    const p = document.createElement("p");
+    const score = document.createElement("p");
+    p.innerHTML = d.user1 + "vs" + d.user2;
+    score.innerHTML = d.user1 + "-" + d.user2;
+    li.appendChild(p);
+    li.appendChild(score);
+    leaderboardDOM.appendChild(li);
+  });
+};
+const filter = () => {
+  const data = JSON.parse(localStorage.win);
+  if (filterVal.value == "date") {
+    while (leaderboardDOM.firstChild)
+      leaderboardDOM.removeChild(leaderboardDOM.lastChild);
+    data
+      .sort((a, b) => a.date - b.date)
+      .map((d) => {
+        const li = document.createElement("li");
+        const p = document.createElement("p");
+        const score = document.createElement("p");
+        p.innerHTML = d.user1 + "vs" + d.user2;
+        score.innerHTML = d.user1 + "-" + d.user2;
+        li.appendChild(p);
+        li.appendChild(score);
+        leaderboardDOM.appendChild(li);
+      });
+  } else if (filterVal.value == "score") {
+    while (leaderboardDOM.firstChild)
+      leaderboardDOM.removeChild(leaderboardDOM.lastChild);
+    data
+      .sort((a, b) => a.score1 + b.score1 - (a.score2 - b.score))
+      .map((d) => {
+        const li = document.createElement("li");
+        const p = document.createElement("p");
+        const score = document.createElement("p");
+        p.innerHTML = d.user1 + "vs" + d.user2;
+        score.innerHTML = d.user1 + "-" + d.user2;
+        li.appendChild(p);
+        li.appendChild(score);
+        leaderboardDOM.appendChild(li);
+      });
+  }
+};
 const update = () => {
   c.clearRect(0, 0, cw, ch);
   game.update();
@@ -40,5 +87,21 @@ process.addEventListener("click", (e) => {
   canvas.hidden = false;
 
   main();
+});
+
+const unDisableBtn = () => {
+  if (p1.value) process.disabled = false;
+  else process.disabled = false;
+  if (form.gameMode) {
+    if (p1.value && p2.value) process.disabled = false;
+    else process.disabled = true;
+  }
+};
+
+p1.addEventListener("keyup", (e) => {
+  unDisableBtn();
+});
+p2.addEventListener("keyup", (e) => {
+  unDisableBtn();
 });
 main();

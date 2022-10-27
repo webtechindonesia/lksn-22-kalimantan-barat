@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <section class="container ">
+    <section class="container active">
       <section class="content">
         <img src="./assets/logo.png" alt="HEXARIA" />
         <h1>Welcome to our Game</h1>
@@ -19,58 +19,67 @@
       </section>
       <section class="instruction">
         <section class="instruction-block">
-            <h3>Instructions</h3>
-            <ul>
-              <li>Choose the game type (PvP or PvB)</li>
-              <li>Obtain the most points to win</li>
-            </ul>
+          <h3>Instructions</h3>
+          <ul>
+            <li>Choose the game type (PvP or PvB)</li>
+            <li>Obtain the most points to win</li>
+          </ul>
         </section>
         <section class="form">
-            <span>Choose Your Game Type</span>
-            <section>
-                <input type="radio" name="gameType" id="player" checked />
-                <label for="player" class="buttonLabel">Player vs Player</label>
-                <input type="radio" name="gameType" id="bot" />
-                <label for="bot" class="buttonLabel">Player vs Bot</label>
-            </section>
-            <div class="button-wrap">
-                <button type="button" class="button" id="startBtn">Start</button>
-            </div>
+          <span>Choose Your Game Type</span>
+          <section>
+            <input type="radio" name="gameType" id="player" checked />
+            <label for="player" class="buttonLabel">Player vs Player</label>
+            <input type="radio" name="gameType" id="bot" />
+            <label for="bot" class="buttonLabel">Player vs Bot</label>
+          </section>
+          <div class="button-wrap">
+            <button type="button" class="button" id="startBtn">Start</button>
+          </div>
         </section>
       </section>
     </section>
     <section class="input-container" hidden>
-        <div class="input-name">
-            <div class="input-field">
-                <label for="p1">Player 1: <span class="sub">(username)</span></label>
-                <input type="text" name="p1" id="p1">
-            </div>
-            <div class="input-field">
-                <label for="p2">Player 2: <span class="sub">(username)</span></label>
-                <input type="text" name="p2" id="p2">
-            </div>
-            <div class="input-field">
-                <label for="level"></label>
-                <select name="level" id="level">
-                    <option value="1">Easy</option>
-                    <option value="2">Medium</option>
-                    <option value="3">Hard</option>
-                </select>
-            </div>
+      <div class="input-name">
+        <div class="input-field">
+          <label for="p1">Player 1: <span class="sub">(username)</span></label>
+          <input type="text" name="p1" id="p1" />
         </div>
-        <button type="button" class="process-button" id="processBtn">Process</button>
+        <div class="input-field">
+          <label for="p2">Player 2: <span class="sub">(username)</span></label>
+          <input type="text" name="p2" id="p2" />
+        </div>
+        <div class="input-field">
+          <label for="level"></label>
+          <select name="level" id="level">
+            <option value="1" selected>Easy</option>
+            <option value="2">Medium</option>
+            <option value="3">Hard</option>
+          </select>
+        </div>
+      </div>
+      <button type="button" class="process-button" id="processBtn" disabled>
+        Start
+      </button>
     </section>
     <!-- 2 hr Function 2 hr Frontend -->
-    <section class="game active">
-        <section class="side">
-            <canvas></canvas>
-            <section class="leaderboard">
-                <h4>Leaderboard</h4>
-                <ul>
-                    
-                </ul>
-            </section>
+    <section class="game ">
+      <img src="./assets/logo.png" height="100" width="600" class="logo" alt="HEXARIA" />
+
+      <section class="side">
+        <canvas></canvas>
+        <section class="leaderboard">
+          <h4>Leaderboard</h4>
+          <select name="filter" id="filter" onchange="filter()">
+            <option value="score">Score</option>
+            <option value="date">Date</option>
+          </select>
+          <ul id="leaderboard"></ul>
         </section>
+      </section>
+    </section>
+    <section class="end">
+      <a href="" class="button">Restart</a>
     </section>
   </body>
 </html>
