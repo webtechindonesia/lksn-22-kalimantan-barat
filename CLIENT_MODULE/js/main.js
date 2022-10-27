@@ -16,9 +16,22 @@ const update = () => {
 };
 start.addEventListener("click", (e) => {
   form.gameMode = playerInput.checked;
-  
-  instruction.hidden = true
-  instruction.classList.toggle('active')
-  inputName.classList.toggle('active')
+
+  p2.value = !form.gameMode ? "BOT" : '' 
+  instruction.hidden = true;
+  instruction.classList.toggle("active");
+  inputName.classList.toggle("active");
   main();
 });
+
+process.addEventListener('click', (e)=>{
+  if(!p1.value || !p2.value){
+    alert('Please Enter The Username Field')
+  }
+  instruction.classList.remove('active')
+  inputName.classList.remove('active')
+  gameField.classList.add('active')
+  main();
+})
+
+main();

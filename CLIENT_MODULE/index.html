@@ -39,17 +39,25 @@
         </section>
       </section>
     </section>
-    <section class="input-name" hidden>
-        <div class="input-field">
-            <label for="p1">Player 1: <span class="sub">(username)</span></label>
-            <input type="text" name="p1" id="p1">
+    <section class="input-container" hidden>
+        <div class="input-name">
+            <div class="input-field">
+                <label for="p1">Player 1: <span class="sub">(username)</span></label>
+                <input type="text" name="p1" id="p1">
+            </div>
+            <div class="input-field">
+                <label for="p2">Player 2: <span class="sub">(username)</span></label>
+                <input type="text" name="p2" id="p2">
+            </div>
         </div>
-        <div class="input-field">
-            <label for="p2">Player 2: <span class="sub">(username)</span></label>
-            <input type="text" name="p2" id="p2">
-        </div>
+        <button type="button" class="process-button" id="processBtn">Process</button>
     </section>
     <!-- 2 hr Function 2 hr Frontend -->
-    <canvas hidden></canvas>
+    <section class="game">
+        <section class="side">
+            <canvas></canvas>
+            <section class="leaderboard"></section>
+        </section>
+    </section>
   </body>
 </html>
