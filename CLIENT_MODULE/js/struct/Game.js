@@ -167,21 +167,18 @@ export default class Game {
         allFilled = false;
       }
     });
+    
     if (allFilled) {
       alert("Game Over");
       this.gameOver = true;
-      // let arr = localStorage.getItem("win") ?? [];
-      // let uP1 = this.uP1,
-      //   uP2 = this.uP2;
-      // arr.push([
-      //   {
-      //     username1: uP1,
-      //     username2: uP2,
-      //     score1: this.p1Score,
-      //     score2: this.p2Score,
-      //   },
-      // ]);
-      // localStorage.setItem("win", arr);
+      let arr = localStorage.getItem("win") ?? [];
+      let uP1 = this.uP1,
+        uP2 = this.uP2;
+      arr.push({
+        [uP1]: this.p1Score,
+        [uP2]: this.p2Score,
+      });
+      localStorage.setItem("win", arr)
     }
   }
   botMove() {

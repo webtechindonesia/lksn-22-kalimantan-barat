@@ -16,9 +16,8 @@ const offsetY = ch / 2 - (height * ver) / 3;
 
 const loadAudio = (src) =>
   new Promise((resolve) => {
-    const audio = new Audio();
+    const audio = new Audio(src);
     audio.addEventListener("load", () => resolve(audio));
-    audio.src = src;
   });
 
 
