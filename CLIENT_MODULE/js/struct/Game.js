@@ -13,10 +13,10 @@ const dir = [
   [-check.width / 2, -check.height],
 ];
 export default class Game {
-  constructor({ gameMode, p1, p2 }) {
-    // this.audio = {
-    //   click: audio,
-    // };
+  constructor(audio,{ gameMode, p1, p2 }) {
+    this.audio = {
+      click: audio,
+    };
     this.uP1 = p1;
     this.uP2 = p2;
     this.gameLevel = 1;
@@ -43,13 +43,13 @@ export default class Game {
     this.listener();
   }
   draw() {
-    if (this.gameOver) return;
+    // if (this.gameOver) return;
 
     this.background();
     this.hexagonMaps.map((h) => h.draw());
   }
   update() {
-    if (this.gameOver) return;
+    // if (this.gameOver) return;
     this.hexagonMaps.map((h) => h.update());
     this.hover();
     this.score();
@@ -125,7 +125,7 @@ export default class Game {
     c.fillRect(0, 0, cw, ch);
   }
   place() {
-    // this.audio.click.play();
+    this.audio.click.play();
     this.selectedBlock.color = this.turn;
     this.selectedBlock.value = this.currentValue;
 
@@ -170,7 +170,6 @@ export default class Game {
     
     if (allFilled) {
       alert("Game Over");
-      this.gameOver = true;
       let arr = localStorage.getItem("win") ?? [];
       let uP1 = this.uP1,
         uP2 = this.uP2;

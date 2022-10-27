@@ -2,9 +2,9 @@ import Game from "./struct/Game.js";
 
 let game;
 
-const assets = "../assets";
 const main = async () => {
-  let audio = await loadAudio("./js/click.mp3");
+  console.log('dsad')
+  let audio = new Audio('./js/click.mp3');
   game = new Game(audio, form);
   update();
 };
@@ -26,11 +26,14 @@ start.addEventListener("click", (e) => {
 process.addEventListener("click", (e) => {
   if (!p1.value || !p2.value) {
     alert("Please Enter The Username Field");
+    return
   }
   form.p1 = p1.value;
   form.p2 = p2.value;
   instruction.classList.remove("active");
   inputName.classList.remove("active");
   gameField.classList.add("active");
+  canvas.hidden = false
+
   main();
 });

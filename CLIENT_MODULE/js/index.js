@@ -11,7 +11,7 @@ const height = 70;
 const hor = 10;
 const ver = 8;
 
-const offsetX = cw / 2 - (width * hor) / 2 + width ;
+const offsetX = cw / 2 - (width * hor) / 2 + width;
 const offsetY = ch / 2 - (height * ver) / 3;
 
 const loadAudio = (src) =>
@@ -20,12 +20,11 @@ const loadAudio = (src) =>
     audio.addEventListener("load", () => resolve(audio));
   });
 
+const instruction = document.querySelector(".container");
+const inputName = document.querySelector(".input-container");
 
-const instruction = document.querySelector('.container');
-const inputName = document.querySelector('.input-container')
-
-const p2 = document.getElementById('p2')
-const p1 = document.getElementById('p1')
+const p2 = document.getElementById("p2");
+const p1 = document.getElementById("p1");
 
 let form = {
   gameMode: null,
@@ -36,6 +35,5 @@ let form = {
 const playerInput = document.getElementById("player");
 const botInput = document.getElementById("bot");
 const start = document.getElementById("startBtn");
-const process = document.getElementById('processBtn');
-const gameField = document.querySelector('.game');
-
+const process = document.getElementById("processBtn");
+const gameField = document.querySelector(".game");
