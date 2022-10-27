@@ -5,15 +5,19 @@ let check = {
   height: height * 0.75,
 };
 const dir = [
-  [0, -check.height],
-  [check.width, -check.height / 2],
-  [check.width, check.height / 2],
-  [0, check.height],
-  [-check.width, check.height / 2],
-  [-check.width, -check.height / 2],
+  [check.width / 2, -check.height],
+  [check.width, 0],
+  [check.width / 2, check.height],
+  [-check.width / 2, check.height],
+  [-check.width, 0],
+  [-check.width / 2, -check.height],
 ];
 export default class Game {
   constructor() {
+    // this.audio = {
+    //   click: audio,
+    // };
+
     this.p1 = "red";
     this.p2 = "blue";
     this.turn = this.p1;
@@ -61,11 +65,65 @@ export default class Game {
     c.fillStyle = "#1d1d1d";
     c.fillRect(0, 0, cw, ch);
   }
+  place() {
+    // this.audio.click.play();
+    this.selectedBlock.color = this.turn;
+    this.selectedBlock.value = this.currentValue;
+
+    this.currentValue = ~~(Math.random() * 19 + 1);
+  }
+  dominate() {
+    dir.map(([dx, dy]) => {
+      let dist = {
+        x: dx + this.selectedBlock.p.x,
+        y: dy + this.selectedBlock.p.y,
+      };
+      this.hexagonMaps.map((h) => {
+        let dx = h.p.x - dist.x,
+          dy = h.p.y - dist.y,
+          dis = Math.sqrt(dx * dx + dy * dy);
+        
+        let inside = dis < rad;
+        if (inside) {
+          if (
+            h.color != "" &&
+            h.color != this.turn &&
+            h.value != 0 &&
+            h.value < this.selectedBlock.value
+          ) {
+            h.color = this.turn;
+          }
+          else if (h.color == this.turn && h.value != 0) {
+            h.value++;
+          }
+        }
+      });
+    });
+    this.turn = this.turn == this.p1 ? this.p2 : this.p1;
+  }
   listener() {
+    canvas.addEventListener("mousedown", (e) => {
+      this.hexagonMaps.map((h) => {
+        if (h.check(e) && h.checkAvailable()) {
+          this.selectedBlock = h;
+          this.selectedBlock.previewHex = {
+            val: 0,
+            color: 0,
+          };
+          this.place();
+          this.dominate();
+        }
+      });
+    });
     canvas.addEventListener("mousemove", (e) => {
+      let temp = this.hoveredBlock;
       this.hoveredBlock = null;
       this.hexagonMaps.map((h) => {
-        if (h.check(e)) this.hoveredBlock = h;
+        if (h.check(e) && h.checkAvailable()) {
+          this.hoveredBlock = h;
+        } else if (h.check(e) && !h.checkAvailable()) {
+          this.hoveredBlock = temp;
+        }
       });
     });
   }

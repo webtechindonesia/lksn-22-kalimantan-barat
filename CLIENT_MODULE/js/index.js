@@ -11,5 +11,12 @@ const height = 70;
 const hor = 10;
 const ver = 8;
 
-const offsetX = cw / 2 - width * hor / 2 + width / 2;
-const offsetY = ch / 2 - height * ver / 3;
+const offsetX = cw / 2 - (width * hor) / 2 + width / 2;
+const offsetY = ch / 2 - (height * ver) / 3;
+
+const loadAudio = (src) =>
+  new Promise((resolve) => {
+    const audio = new Audio();
+    audio.addEventListener("load", () => resolve(audio));
+    audio.src = src;
+  });
