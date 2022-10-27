@@ -69,6 +69,7 @@ export default class Game {
   }
   hover() {
     if (!this.hoveredBlock) return;
+    if (this.turn == this.p2 && this.bot) return;
     this.hexagonMaps.map((h) => {
       h.previewHex = {
         val: 0,
@@ -94,31 +95,31 @@ export default class Game {
             h.value != 0 &&
             h.value < this.selectedBlock.value
           ) {
-            h.color = this.turn;
-          } else if (h.color == this.turn && h.value != 0) {
-            h.value++;
-          }
-        }
-      });
-      this.hexagonMaps.map((h) => {
-        let dx = h.p.x - dist.x,
-          dy = h.p.y - dist.y,
-          dis = Math.sqrt(dx * dx + dy * dy);
-
-        let inside = dis < rad && h.key != this.hoveredBlock.key;
-        if (inside) {
-          if (
-            h.color != "" &&
-            h.color != this.turn &&
-            h.value != 0 &&
-            h.value < this.hoveredBlock.value
-          ) {
             h.previewChangeColor();
           } else if (h.color == this.turn && h.value != 0) {
             h.previewChangeValue();
           }
         }
       });
+      //   this.hexagonMaps.map((h) => {
+      //     let dx = h.p.x - dist.x,
+      //       dy = h.p.y - dist.y,
+      //       dis = Math.sqrt(dx * dx + dy * dy);
+
+      //     let inside = dis < rad && h.key != this.hoveredBlock.key;
+      //     if (inside) {
+      //       if (
+      //         h.color != "" &&
+      //         h.color != this.turn &&
+      //         h.value != 0 &&
+      //         h.value < this.hoveredBlock.value
+      //       ) {
+      //         h.previewChangeColor();
+      //       } else if (h.color == this.turn && h.value != 0) {
+      //         h.previewChangeValue();
+      //       }
+      //     }
+      //   });
     });
   }
   generate() {
@@ -192,30 +193,34 @@ export default class Game {
     if (this.turn == this.p2) {
       let arr = [];
       let filtered = this.hexagonMaps.filter(
-        (a) => (a.color = "" && !a.disabled)
+        (a) => a.color == "" && !a.disabled
       );
       for (let i = 0; i < 3; i++) {
-        arr.push(filtered[~~(Math.random() * filtered.length)]);
+        arr.push(filtered[~~(Math.random() * filtered.length - 1)]);
       }
       let k = 0;
       let interval = setInterval(() => {
         if (k == 3) {
-          this.selectedBlock = filtered[~~(Math.random() * 3)];
+          this.selectedBlock = arr[~~(Math.random() * 3)];
           this.selectedBlock.preview = {
             val: 0,
             color: 0,
           };
-          this.place()
-          this.dominate()
+          this.place();
+          this.dominate();
+
           clearInterval(interval);
+        } else {
+          console.log(arr);
+          arr[k].preview(this.currentValue, this.turn);
         }
-        arr[k].preview(this.currentValue, this.turn);
         k++;
       }, 300);
     }
   }
   listener() {
     canvas.addEventListener("mousedown", (e) => {
+      if (this.turn != this.p1 && this.bot) return;
       this.hexagonMaps.map((h) => {
         if (h.check(e) && h.checkAvailable()) {
           this.selectedBlock = h;
@@ -229,6 +234,7 @@ export default class Game {
       });
     });
     canvas.addEventListener("mousemove", (e) => {
+      if (this.turn != this.p1 && this.bot) return;
       let temp = this.hoveredBlock;
       this.hoveredBlock = null;
       this.hexagonMaps.map((h) => {
