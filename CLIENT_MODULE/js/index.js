@@ -57,6 +57,6 @@ const getTableData = (data) => {
   if (data.score1 > data.score2) {
     alert(data.user1 + " IS THE WINNER");
   } else {
-    alert(data.user1 + " IS THE WINNER");
+    alert(data.user2 + " IS THE WINNER");
   }
 };
