@@ -20,3 +20,17 @@ const loadAudio = (src) =>
     audio.addEventListener("load", () => resolve(audio));
     audio.src = src;
   });
+
+
+const instruction = document.querySelector('.container');
+const inputName = document.querySelector('.input-name')
+
+let form = {
+  gameMode: null,
+  p1: null,
+  p2: null,
+};
+
+const playerInput = document.getElementById("player");
+const botInput = document.getElementById("bot");
+const start = document.getElementById("startBtn");

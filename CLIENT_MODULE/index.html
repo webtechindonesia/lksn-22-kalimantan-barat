@@ -6,12 +6,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hexaria</title>
     <link rel="icon" href="assets/logo.png" type="image/x-icon" />
-    <link rel="stylesheet" href="style.css" />
     <script src="./js/index.js" defer></script>
     <script src="./js/main.js" type="module" defer></script>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <section class="container active">
+      <section class="content">
+        <img src="./assets/logo.png" alt="HEXARIA" />
+        <h1>Welcome to our Game</h1>
+        <p>Please Enjoy</p>
+      </section>
+      <section class="instruction">
+        <section class="instruction-block">
+            <h3>Instructions</h3>
+            <ul>
+              <li>Choose the game type (PvP or PvB)</li>
+              <li>Obtain the most points to win</li>
+            </ul>
+        </section>
+        <section class="form">
+            <span>Choose Your Game Type</span>
+            <section>
+                <input type="radio" name="gameType" id="player" checked />
+                <label for="player" class="buttonLabel">Player vs Player</label>
+                <input type="radio" name="gameType" id="bot" />
+                <label for="bot" class="buttonLabel">Player vs Bot</label>
+            </section>
+            <div class="button-wrap">
+                <button type="button" class="button" id="startBtn">Start</button>
+            </div>
+        </section>
+      </section>
+    </section>
+    <section class="input-name" hidden>
+        <div class="input-field">
+            <label for="p1">Player 1: <span class="sub">(username)</span></label>
+            <input type="text" name="p1" id="p1">
+        </div>
+        <div class="input-field">
+            <label for="p2">Player 2: <span class="sub">(username)</span></label>
+            <input type="text" name="p2" id="p2">
+        </div>
+    </section>
     <!-- 2 hr Function 2 hr Frontend -->
-    <canvas></canvas>
+    <canvas hidden></canvas>
   </body>
 </html>

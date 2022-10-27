@@ -67,16 +67,7 @@ export default class Game {
     this.p1Score = p1Score;
     this.p2Score = p2Score;
   }
-  hover() {
-    if (!this.hoveredBlock) return;
-    if (this.turn == this.p2 && this.bot) return;
-    this.hexagonMaps.map((h) => {
-      h.previewHex = {
-        val: 0,
-        color: 0,
-      };
-    });
-    this.hoveredBlock.preview(this.currentValue, this.turn);
+  sideBlockPreview() {
     dir.map(([dx, dy]) => {
       let dist = {
         x: dx + this.hoveredBlock.p.x,
@@ -101,26 +92,19 @@ export default class Game {
           }
         }
       });
-      //   this.hexagonMaps.map((h) => {
-      //     let dx = h.p.x - dist.x,
-      //       dy = h.p.y - dist.y,
-      //       dis = Math.sqrt(dx * dx + dy * dy);
-
-      //     let inside = dis < rad && h.key != this.hoveredBlock.key;
-      //     if (inside) {
-      //       if (
-      //         h.color != "" &&
-      //         h.color != this.turn &&
-      //         h.value != 0 &&
-      //         h.value < this.hoveredBlock.value
-      //       ) {
-      //         h.previewChangeColor();
-      //       } else if (h.color == this.turn && h.value != 0) {
-      //         h.previewChangeValue();
-      //       }
-      //     }
-      //   });
     });
+  }
+  hover() {
+    if (!this.hoveredBlock) return;
+    if (this.turn == this.p2 && this.bot) return;
+    this.hexagonMaps.map((h) => {
+      h.previewHex = {
+        val: 0,
+        color: 0,
+      };
+    });
+    this.hoveredBlock.preview(this.currentValue, this.turn);
+    this.sideBlockPreview();
   }
   generate() {
     for (let y = 0; y < ver; y++) {

@@ -4,7 +4,7 @@ let game;
 
 // const assets = "../assets";
 const main = async () => {
-//   let audio = await loadAudio(assets + "/click.mp3");
+  //   let audio = await loadAudio(assets + "/click.mp3");
   game = new Game();
   update();
 };
@@ -14,5 +14,11 @@ const update = () => {
   game.draw();
   requestAnimationFrame(update);
 };
-
-main();
+start.addEventListener("click", (e) => {
+  form.gameMode = playerInput.checked;
+  
+  instruction.hidden = true
+  instruction.classList.toggle('active')
+  inputName.classList.toggle('active')
+  main();
+});
