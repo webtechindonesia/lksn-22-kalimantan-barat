@@ -18,6 +18,8 @@ export default class Game {
     //   click: audio,
     // };
 
+    this.gameLevel = 1;
+
     this.p1 = "red";
     this.p2 = "blue";
     this.turn = this.p1;
@@ -50,6 +52,32 @@ export default class Game {
       };
     });
     this.hoveredBlock.preview(this.currentValue, this.turn);
+    dir.map(([dx, dy]) => {
+      let dist = {
+        x: this.hoveredBlock.p.x + dx,
+        y: this.hoveredBlock.p.y + dy,
+      };
+      this.hexagonMaps.map((h) => {
+        let dx = h.p.x - dist.x,
+          dy = h.p.y - dist.y,
+          dis = Math.sqrt(dx * dx + dy * dy);
+
+        let inside = dis < rad;
+        if (inside) {
+          if (
+            h.color != "" &&
+            h.color != this.turn &&
+            h.value != 0 &&
+            h.value < this.hoveredBlock.value
+          ) {
+            h.previewChangeColor();
+          }
+          else if (h.color == this.turn && h.value != 0) {
+            h.previewChangeValue();
+          }
+        }
+      });
+    });
   }
   generate() {
     for (let y = 0; y < ver; y++) {
@@ -59,6 +87,9 @@ export default class Game {
 
         this.hexagonMaps.push(new Hexagon(newX, newY));
       }
+    }
+    for(let i = 0; i < 2 + this.gameLevel * 2; i++){
+        this.hexagonMaps[~~(Math.random() * hor * ver)].disabled = true
     }
   }
   background() {
@@ -82,7 +113,7 @@ export default class Game {
         let dx = h.p.x - dist.x,
           dy = h.p.y - dist.y,
           dis = Math.sqrt(dx * dx + dy * dy);
-        
+
         let inside = dis < rad;
         if (inside) {
           if (
@@ -92,8 +123,7 @@ export default class Game {
             h.value < this.selectedBlock.value
           ) {
             h.color = this.turn;
-          }
-          else if (h.color == this.turn && h.value != 0) {
+          } else if (h.color == this.turn && h.value != 0) {
             h.value++;
           }
         }

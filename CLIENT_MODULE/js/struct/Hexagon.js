@@ -4,6 +4,7 @@ export default class Hexagon {
     this.value = 0;
     this.p = { x, y };
 
+    this.disabled = false;
     this.previewHex = {
       val: 0,
       color: 0,
@@ -14,6 +15,18 @@ export default class Hexagon {
       val,
       color,
     };
+  }
+  previewChangeColor(){
+    this.previewHex = {
+      val: this.val,
+      color: "yellow"
+    }
+  }
+  previewChangeValue(){
+    this.previewHex = {
+      val: this.val + " + 1",
+      color: this.color
+    }
   }
   update() {}
   draw() {
@@ -31,7 +44,12 @@ export default class Hexagon {
       else c.lineTo(dest.x, dest.y);
     }
     c.fill();
-    this.display();
+    if(this.disabled){
+      c.fillStyle = "gray"
+      c.fill()
+    }else{
+      this.display();
+    }
     c.stroke();
     c.closePath();
     c.restore();
@@ -71,6 +89,6 @@ export default class Hexagon {
   }
   checkAvailable() {
     this.value == 0 && this.color == "" ? "S" : "A";
-    return this.value == 0 && this.color == "";
+    return this.value == 0 && this.color == "" && !this.disabled;
   }
 }
